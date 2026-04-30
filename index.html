@@ -2,6 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#667eea">
 <title>감정 몬스터 정화 퀘스트</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -321,6 +325,215 @@
     height: 100%;
     width: 0%;
     transition: width 0.4s;
+  }
+
+  /* ===== 모바일 최적화 (768px 이하) ===== */
+  @media (max-width: 768px) {
+    body {
+      padding: 12px;
+      font-size: 16px;
+    }
+    .container {
+      padding: 20px;
+      border-radius: 20px;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 0.95em;
+      margin-bottom: 15px;
+    }
+    .stats {
+      padding: 12px;
+      margin-bottom: 20px;
+      gap: 8px;
+    }
+    .stat-item {
+      font-size: 0.9em;
+    }
+    .stat-value {
+      font-size: 1.4em;
+    }
+    .monsters-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .monster-card {
+      padding: 15px;
+    }
+    .monster-emoji {
+      width: 70px;
+      height: 70px;
+    }
+    .monster-name {
+      font-size: 1.1em;
+    }
+    .monster-desc {
+      font-size: 0.8em;
+    }
+    .quest-area {
+      padding: 20px;
+      min-height: 350px;
+    }
+    .quest-monster {
+      width: 120px;
+      height: 120px;
+    }
+    .quest-title {
+      font-size: 1.3em;
+      margin: 12px 0;
+    }
+    .quest-instruction {
+      font-size: 0.95em;
+      margin-bottom: 15px;
+    }
+    .btn {
+      padding: 14px 24px;
+      font-size: 1em;
+      min-height: 48px;
+      min-width: 48px;
+    }
+    .modal {
+      padding: 30px 20px;
+      max-width: 90vw;
+    }
+    .modal-emoji {
+      font-size: 4em;
+    }
+    .modal h2 {
+      font-size: 1.4em;
+    }
+    .modal p {
+      font-size: 0.95em;
+    }
+    .grounding-step {
+      padding: 15px;
+      margin: 12px 0;
+    }
+    .grounding-input {
+      padding: 12px;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+    .pause-game {
+      min-height: 280px;
+    }
+    .gem-area {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+    }
+    .gem {
+      padding: 12px;
+      font-size: 0.9em;
+    }
+  }
+
+  /* 매우 작은 화면 (480px 이하) */
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+    .container {
+      padding: 15px;
+      border-radius: 15px;
+    }
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 5px;
+    }
+    .stats {
+      padding: 10px;
+      margin-bottom: 15px;
+      gap: 5px;
+    }
+    .stat-item {
+      font-size: 0.8em;
+    }
+    .stat-value {
+      font-size: 1.2em;
+    }
+    .monsters-grid {
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .monster-card {
+      padding: 12px;
+    }
+    .monster-emoji {
+      width: 60px;
+      height: 60px;
+    }
+    .monster-name {
+      font-size: 1em;
+    }
+    .monster-desc {
+      font-size: 0.75em;
+    }
+    .quest-area {
+      padding: 15px;
+      min-height: 320px;
+    }
+    .quest-monster {
+      width: 100px;
+      height: 100px;
+    }
+    .quest-title {
+      font-size: 1.1em;
+      margin: 10px 0;
+    }
+    .quest-instruction {
+      font-size: 0.9em;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .btn {
+      padding: 12px 20px;
+      font-size: 0.95em;
+      min-height: 44px;
+    }
+    .modal {
+      padding: 25px 15px;
+      max-width: 95vw;
+      margin: 10px;
+    }
+    .modal-emoji {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+    }
+    .modal h2 {
+      font-size: 1.2em;
+      margin-bottom: 8px;
+    }
+    .modal p {
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+    .gem-area {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gem {
+      padding: 10px;
+      font-size: 0.8em;
+    }
+    .pause-info {
+      font-size: 0.85em;
+      padding: 8px;
+    }
+  }
+
+  /* 터치 디바이스 최적화 */
+  @media (hover: none) and (pointer: coarse) {
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .monster-card:active {
+      transform: scale(0.98);
+    }
+    .gem:active {
+      transform: scale(0.95) rotate(1deg);
+    }
   }
 </style>
 </head>
