@@ -327,6 +327,167 @@
     transition: width 0.4s;
   }
 
+  /* ===== 새로운 퀘스트 UI ===== */
+
+  /* 산 오르기 (Climb) */
+  .mountain {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(180deg, #87ceeb 0%, #deb887 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .mountain-path {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .step {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    color: #888;
+    transition: all 0.3s;
+  }
+  .step.passed {
+    background: linear-gradient(135deg, #82e0aa, #a8e063);
+    border-color: #27ae60;
+    color: white;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+  }
+  .climber {
+    position: absolute;
+    font-size: 3em;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.4s ease;
+    z-index: 3;
+  }
+
+  /* 이미지 공개 (Reveal) */
+  .reveal-image {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    border-radius: 15px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5em;
+    filter: blur(20px);
+    opacity: 0.3;
+    transition: all 0.4s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .reveal-image.revealed {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  .reveal-percent {
+    text-align: center;
+    font-weight: bold;
+    color: #5a3d8a;
+    margin: 15px 0;
+    font-size: 1.2em;
+  }
+
+  /* 버블 터트리기 (Bubbles) */
+  .bubbles-container {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 100%);
+    border-radius: 15px;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff9999 0%, #ff6b6b 100%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    transition: all 0.2s;
+  }
+  .bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(255, 107, 107, 0.6);
+  }
+  .bubble.popped {
+    background: transparent;
+    border: 2px solid #82e0aa;
+    box-shadow: none;
+    pointer-events: none;
+  }
+  .bubble-count {
+    text-align: center;
+    font-weight: bold;
+    color: #5a3d8a;
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+
+  /* 메모리 게임 (Memory) */
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .memory-card {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: 2px solid #5a3d8a;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+  .memory-card:hover:not(.matched) {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.5);
+  }
+  .memory-card.flipped {
+    background: white;
+    border-color: #82e0aa;
+  }
+  .memory-card.matched {
+    background: linear-gradient(135deg, #82e0aa, #a8e063);
+    border-color: #27ae60;
+    pointer-events: none;
+  }
+  .memory-info {
+    text-align: center;
+    color: #5a3d8a;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
   /* ===== 모바일 최적화 (768px 이하) ===== */
   @media (max-width: 768px) {
     body {
@@ -521,6 +682,23 @@
       font-size: 0.85em;
       padding: 8px;
     }
+    /* 새로운 퀘스트 모바일 */
+    .mountain {
+      height: 250px;
+    }
+    .reveal-image {
+      width: 160px;
+      height: 160px;
+      font-size: 4em;
+    }
+    .memory-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 240px;
+    }
+    .bubbles-container {
+      height: 240px;
+    }
   }
 
   /* 터치 디바이스 최적화 */
@@ -630,40 +808,40 @@ const monsters = [
     name: '좌절몬',
     emoji: '😩',
     desc: '잘 안 될 때 나타나요',
-    quest: 'breathing',
-    questTitle: '좌절 진정 호흡 마법',
-    instruction: '좌절몬이 마음을 무겁게 만들어요!\n깊은 호흡으로 마음을 가라앉혀 다시 도전할 힘을 모아봐요. 4번 반복!',
-    healMessage: '훌륭해요! 좌절몬이 작아졌어요. 잘 안 될 때 호흡하면 다시 시작할 힘이 생겨요!'
+    quest: 'climb',
+    questTitle: '한 걸음씩 올라가기',
+    instruction: '좌절몬과 함께 산을 올라가 봐요!\n한 번에 한 걸음씩, 끝까지 올라가면 돼요.\n함께라면 할 수 있어!',
+    healMessage: '대단해요! 좌절몬이 정상에서 환호해요. 큰 목표도 한 걸음씩 가면 반드시 도달할 수 있어요!'
   },
   {
     id: 'fear',
     name: '두려움몬',
     emoji: '😨',
     desc: '무서울 때 나타나요',
-    quest: 'grounding',
-    questTitle: '용기 안정 마법',
-    instruction: '두려움몬이 떨고 있어요!\n5-4-3-2-1로 지금 여기에 집중하면, 두려움은 작아진답니다.',
-    healMessage: '용감해요! 두려움몬이 안정을 찾았어요. 무서울 때 주변을 살피면 마음이 단단해져요.'
+    quest: 'reveal',
+    questTitle: '용기 있게 봐보기',
+    instruction: '두려움몬이 눈을 감고 있어요.\n클릭할 때마다 점점 선명해져요.\n용기 내서 끝까지 봐보세요!',
+    healMessage: '용감해요! 두려움몬이 웃고 있어요. 두려움은 용기 있게 마주하면 훨씬 작아진답니다!'
   },
   {
     id: 'irritation',
     name: '짜증몬',
     emoji: '😤',
     desc: '사소한 일에 짜증날 때 나타나요',
-    quest: 'pause',
-    questTitle: '짜증 멈춤 마법',
-    instruction: '짜증몬이 폭발하기 전에 멈춤 마법이 필요해요!\n노란 별만 클릭하고 빨간 폭탄은 절대 누르지 마세요.\n반응하기 전에 한 번 더 생각하기!',
-    healMessage: '대단해요! 짜증몬이 차분해졌어요. 잠깐 멈추면 사소한 일에 휘둘리지 않아요!'
+    quest: 'bubbles',
+    questTitle: '짜증 버블 터트리기',
+    instruction: '짜증은 방 안의 답답한 공기 같아요.\n나타나는 버블을 모두 터트려 신선한 공기를 들이마셔요!\n8개 버블을 모두 터트리세요!',
+    healMessage: '최고예요! 짜증몬이 한숨을 쉬며 사라졌어요. 답답할 때는 그것을 놔주면 마음이 맑아진답니다!'
   },
   {
     id: 'lonely',
     name: '외로움몬',
     emoji: '🥺',
     desc: '혼자라고 느낄 때 나타나요',
-    quest: 'positive',
-    questTitle: '따뜻한 마음 보석 모으기',
-    instruction: '외로움몬에게 따뜻한 위로의 말을 건네 보세요.\n반짝이는 보석들을 모두 모아 외로움몬에게 선물해 주세요!',
-    healMessage: '따뜻해요! 외로움몬이 미소를 지었어요. 자신에게 따뜻한 말을 건네는 건 큰 용기랍니다.'
+    quest: 'memory',
+    questTitle: '친구 찾기',
+    instruction: '외로움몬이 혼자라고 느끼고 있어요.\n카드를 뒤집어서 같은 친구들의 쌍을 찾아주세요!\n모든 짝을 찾으면 외로움몬도 친구를 얻을 거예요!',
+    healMessage: '멋져요! 외로움몬이 친구들을 찾았어요. 관심을 갖고 다가서면 항상 누군가가 함께 있답니다!'
   }
 ];
 
@@ -861,6 +1039,10 @@ function startQuest(monster) {
   else if (monster.quest === 'grounding') initGrounding(gameDiv, monster);
   else if (monster.quest === 'pause') initPause(gameDiv, monster);
   else if (monster.quest === 'positive') initPositive(gameDiv, monster);
+  else if (monster.quest === 'climb') initClimb(gameDiv, monster);
+  else if (monster.quest === 'reveal') initReveal(gameDiv, monster);
+  else if (monster.quest === 'bubbles') initBubbles(gameDiv, monster);
+  else if (monster.quest === 'memory') initMemory(gameDiv, monster);
 }
 
 /* ====== 호흡 퀘스트 ====== */
@@ -1011,7 +1193,215 @@ function initPositive(div, monster) {
   });
 }
 
-/* ====== 효과 ====== */
+/* ====== 산 오르기 퀘스트 (Climb) ====== */
+function initClimb(div, monster) {
+  const steps = 10;
+  let currentStep = 0;
+
+  div.innerHTML = `
+    <div class="mountain" id="mountain">
+      <div class="climber" id="climber">🧗</div>
+      <div class="mountain-path" id="mountainPath"></div>
+    </div>
+    <div style="text-align:center; font-weight:bold; color:#5a3d8a; margin:15px 0;">
+      <span id="stepCount">${currentStep}</span> / ${steps} 발
+    </div>
+    <button class="btn btn-success" id="climbBtn" style="width:100%;">👣 한 발짝 올라가!</button>
+  `;
+
+  const mountain = document.getElementById('mountain');
+  const path = document.getElementById('mountainPath');
+  const climber = document.getElementById('climber');
+  const climbBtn = document.getElementById('climbBtn');
+  const stepCount = document.getElementById('stepCount');
+
+  // 계단 생성
+  for (let i = 0; i < steps; i++) {
+    const step = document.createElement('div');
+    step.className = 'step';
+    step.textContent = `${i + 1}`;
+    path.appendChild(step);
+  }
+
+  const stepEls = path.querySelectorAll('.step');
+
+  climbBtn.onclick = () => {
+    if (currentStep >= steps) return;
+
+    currentStep++;
+    stepCount.textContent = currentStep;
+
+    // 통과한 계단 활성화
+    stepEls[currentStep - 1].classList.add('passed');
+
+    // 등산가 위치 업데이트
+    const progress = currentStep / steps;
+    const bottomPos = 20 + (progress * (mountain.offsetHeight - 80));
+    climber.style.bottom = bottomPos + 'px';
+
+    addSparkle(climber);
+
+    if (currentStep >= steps) {
+      climbBtn.disabled = true;
+      climbBtn.textContent = '🏔️ 정상 도달!';
+      setTimeout(() => complete(monster), 800);
+    }
+  };
+}
+
+/* ====== 이미지 공개 퀘스트 (Reveal) ====== */
+function initReveal(div, monster) {
+  const totalClicks = 10;
+  let clickCount = 0;
+
+  div.innerHTML = `
+    <div class="reveal-image" id="revealImage">😨</div>
+    <div class="reveal-percent" id="revealPercent">0%</div>
+    <button class="btn btn-success" id="revealBtn" style="width:100%;">👀 봐보기</button>
+  `;
+
+  const image = document.getElementById('revealImage');
+  const percent = document.getElementById('revealPercent');
+  const btn = document.getElementById('revealBtn');
+
+  btn.onclick = () => {
+    if (clickCount >= totalClicks) return;
+
+    clickCount++;
+    const clarity = (clickCount / totalClicks) * 100;
+
+    // 이미지 점진적으로 선명하게
+    image.style.filter = `blur(${20 - (clarity / 100) * 20}px)`;
+    image.style.opacity = 0.3 + (clarity / 100) * 0.7;
+    percent.textContent = Math.floor(clarity) + '%';
+
+    addSparkle(image);
+
+    if (clickCount >= totalClicks) {
+      image.textContent = '😊';
+      percent.textContent = '100% - 보인다! 귀여운데요?';
+      btn.disabled = true;
+      btn.textContent = '✨ 용감했어요!';
+      setTimeout(() => complete(monster), 600);
+    }
+  };
+}
+
+/* ====== 버블 터트리기 퀘스트 (Bubbles) ====== */
+function initBubbles(div, monster) {
+  const bubbleCount = 8;
+  let popped = 0;
+
+  div.innerHTML = `
+    <div class="bubble-count">💨 <span id="bubbleRemain">${bubbleCount}</span> / ${bubbleCount}</div>
+    <div class="bubbles-container" id="bubblesContainer"></div>
+  `;
+
+  const container = document.getElementById('bubblesContainer');
+  const remain = document.getElementById('bubbleRemain');
+
+  for (let i = 0; i < bubbleCount; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = '○';
+
+    // 랜덤 위치와 크기
+    const size = 40 + Math.random() * 40;
+    const x = Math.random() * (container.offsetWidth - size);
+    const y = Math.random() * (container.offsetHeight - size);
+
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = x + 'px';
+    bubble.style.top = y + 'px';
+    bubble.style.fontSize = (size / 2) + 'px';
+
+    bubble.onclick = (e) => {
+      e.stopPropagation();
+      if (bubble.classList.contains('popped')) return;
+
+      bubble.classList.add('popped');
+      popped++;
+      remain.textContent = bubbleCount - popped;
+      addSparkle(bubble);
+
+      if (popped >= bubbleCount) {
+        setTimeout(() => complete(monster), 600);
+      }
+    };
+
+    container.appendChild(bubble);
+  }
+}
+
+/* ====== 메모리 게임 (Memory) ====== */
+function initMemory(div, monster) {
+  const pairs = ['🐶', '🐱', '🦁', '🐻'];
+  const cards = [...pairs, ...pairs];
+
+  // 카드 섞기
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+
+  div.innerHTML = `
+    <div class="memory-info">같은 친구들의 쌍을 찾아보세요!</div>
+    <div class="memory-grid" id="memoryGrid"></div>
+  `;
+
+  const grid = document.getElementById('memoryGrid');
+  let flipped = [];
+  let matched = 0;
+  let isChecking = false;
+
+  cards.forEach((emoji, idx) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.index = idx;
+    card.dataset.emoji = emoji;
+    card.textContent = '❓';
+
+    card.onclick = () => {
+      if (isChecking || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      card.classList.add('flipped');
+      card.textContent = emoji;
+      flipped.push(card);
+
+      if (flipped.length === 2) {
+        isChecking = true;
+
+        if (flipped[0].dataset.emoji === flipped[1].dataset.emoji) {
+          // 맞음!
+          flipped[0].classList.add('matched');
+          flipped[1].classList.add('matched');
+          addSparkle(flipped[0]);
+          addSparkle(flipped[1]);
+          matched++;
+          flipped = [];
+          isChecking = false;
+
+          if (matched >= pairs.length) {
+            setTimeout(() => complete(monster), 800);
+          }
+        } else {
+          // 틀림
+          setTimeout(() => {
+            flipped[0].classList.remove('flipped');
+            flipped[1].classList.remove('flipped');
+            flipped[0].textContent = '❓';
+            flipped[1].textContent = '❓';
+            flipped = [];
+            isChecking = false;
+          }, 1000);
+        }
+      }
+    };
+
+    grid.appendChild(card);
+  });
+}
 function addSparkle(el) {
   const rect = el.getBoundingClientRect();
   for (let i = 0; i < 5; i++) {
