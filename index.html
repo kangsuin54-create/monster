@@ -701,6 +701,29 @@
     }
   }
 
+  /* ===== 레벨 헤더 ===== */
+  .level-header {
+    background: linear-gradient(135deg, #5a3d8a, #764ba2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    color: white;
+    margin-bottom: 5px;
+  }
+  .level-header h2 { font-size: 1.3em; margin-bottom: 8px; }
+  .level-dots { display: flex; justify-content: center; gap: 8px; margin: 10px 0 5px; }
+  .level-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75em; font-weight: bold; color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .level-dot.done { background: #f1c40f; border-color: #f39c12; color: #5a3d8a; }
+  .level-dot.current { background: white; border-color: white; color: #5a3d8a; }
+  .level-progress-wrap { background: rgba(255,255,255,0.25); border-radius: 10px; height: 12px; overflow: hidden; margin: 8px 0 4px; }
+  .level-progress-bar { height: 100%; background: #f1c40f; border-radius: 10px; transition: width 0.4s; }
+  .level-progress-text { font-size: 0.82em; opacity: 0.88; }
+
   /* ===== 네비게이션 바 ===== */
   .nav-bar {
     display: flex;
@@ -897,25 +920,25 @@
     <div class="stats">
       <div class="stat-item">
         <span class="stat-value" id="starsCount">0</span>
-        ⭐ 별
+        ⭐ 총 별
       </div>
       <div class="stat-item">
         <span class="stat-value" id="purifiedCount">0/8</span>
-        💖 친구된 몬스터
+        💖 이번 단계
       </div>
       <div class="stat-item">
-        <span class="stat-value" id="levelDisplay">Lv.1</span>
-        🏆 레벨
+        <span class="stat-value" id="levelDisplay">1단계</span>
+        🏆 현재 단계
       </div>
       <div class="stat-item">
-        <span class="stat-value" id="diffDisplay">⚔️1</span>
-        🎯 난이도
+        <span class="stat-value" id="diffDisplay">쉬움</span>
+        ⚔️ 난이도
       </div>
     </div>
 
     <!-- 메인 화면 -->
     <div id="mainScreen" class="screen active">
-      <h2 style="text-align:center; color:#5a3d8a; margin-bottom:20px;">정화할 몬스터를 골라보세요!</h2>
+      <div id="levelHeader" style="text-align:center; margin-bottom:18px;"></div>
       <div class="monsters-grid" id="monstersGrid"></div>
     </div>
 
@@ -944,7 +967,7 @@
     <div class="modal-emoji" id="modalEmoji">🎉</div>
     <h2 id="modalTitle">정화 완료!</h2>
     <p id="modalMessage"></p>
-    <button class="btn btn-success" onclick="closeModal()">계속하기</button>
+    <button class="btn btn-success" id="modalBtn" onclick="closeModal()">계속하기</button>
   </div>
 </div>
 
@@ -1162,43 +1185,25 @@ function getMonsterArt(id, isPurified) {
   return isPurified ? monsterSVGs.purified : (monsterSVGs[id] || '');
 }
 
-/* ====== 레벨·난이도 설정 ====== */
-const LEVEL_THRESHOLDS = [0, 5, 15, 30, 50, 75, 105, 140, 180, 225];
-const LEVEL_TITLES = ['마음 탐험가 🔍','정화 견습생 🌱','감정 조련사 🎯','마음 수호자 🛡️','정화 마법사 ✨','감정 마스터 👑','전설의 정화사 🌟','빛의 수호자 💫','마음의 현자 🔮','감정의 신 ⚡'];
-const DIFF_NAMES = ['','쉬움','보통','어려움','고급','전설'];
-const DIFF_CONFIG = {
-  1: { cycles:4,  groundMin:3, pauseStars:5,  interval:900, gems:6,  steps:10, revClicks:10, bubbles:8,  memPairs:['🐶','🐱','🦁','🐻'],                         timer:null, earnFirst:3,  earnRetry:1 },
-  2: { cycles:5,  groundMin:4, pauseStars:7,  interval:750, gems:8,  steps:15, revClicks:12, bubbles:10, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],               timer:null, earnFirst:5,  earnRetry:2 },
-  3: { cycles:6,  groundMin:5, pauseStars:10, interval:600, gems:10, steps:20, revClicks:15, bubbles:12, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],               timer:60,   earnFirst:8,  earnRetry:3 },
-  4: { cycles:7,  groundMin:5, pauseStars:12, interval:500, gems:12, steps:25, revClicks:18, bubbles:15, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'],   timer:45,   earnFirst:12, earnRetry:4 },
-  5: { cycles:8,  groundMin:5, pauseStars:15, interval:400, gems:14, steps:30, revClicks:20, bubbles:18, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'],   timer:30,   earnFirst:18, earnRetry:6 }
+/* ====== 단계·난이도 설정 ====== */
+const MAX_LEVEL = 5;
+const LEVEL_NAMES  = ['', '1단계', '2단계', '3단계', '4단계', '5단계'];
+const LEVEL_TITLES = ['', '마음 탐험가 🔍', '정화 견습생 🌱', '감정 조련사 🎯', '마음 수호자 🛡️', '정화 마법사 ✨'];
+const DIFF_NAMES   = ['', '쉬움', '보통', '어려움', '고급', '전설'];
+const DIFF_CONFIG  = {
+  1: { cycles:4,  groundMin:3, pauseStars:5,  interval:900, gems:6,  steps:10, revClicks:10, bubbles:8,  memPairs:['🐶','🐱','🦁','🐻'],                       timer:null, earnFirst:3,  earnRetry:1 },
+  2: { cycles:5,  groundMin:4, pauseStars:7,  interval:750, gems:8,  steps:15, revClicks:12, bubbles:10, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],             timer:null, earnFirst:5,  earnRetry:2 },
+  3: { cycles:6,  groundMin:5, pauseStars:10, interval:600, gems:10, steps:20, revClicks:15, bubbles:12, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],             timer:60,   earnFirst:8,  earnRetry:3 },
+  4: { cycles:7,  groundMin:5, pauseStars:12, interval:500, gems:12, steps:25, revClicks:18, bubbles:15, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'], timer:45,   earnFirst:12, earnRetry:4 },
+  5: { cycles:8,  groundMin:5, pauseStars:15, interval:400, gems:14, steps:30, revClicks:20, bubbles:18, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'], timer:30,   earnFirst:18, earnRetry:6 }
 };
 
-function calcLevel(stars) {
-  let lv = 1;
-  for (let i = 0; i < LEVEL_THRESHOLDS.length; i++) {
-    if (stars >= LEVEL_THRESHOLDS[i]) lv = i + 1;
-    else break;
-  }
-  return Math.min(lv, LEVEL_THRESHOLDS.length);
-}
-function getLevelTitle(lv) { return LEVEL_TITLES[Math.min(lv - 1, LEVEL_TITLES.length - 1)]; }
-function getDifficulty(lv) {
-  if (lv <= 2) return 1; if (lv <= 4) return 2;
-  if (lv <= 6) return 3; if (lv <= 8) return 4;
-  return 5;
-}
-function levelProgress(stars) {
-  const lv = calcLevel(stars);
-  if (lv >= LEVEL_THRESHOLDS.length) return 100;
-  const cur = LEVEL_THRESHOLDS[lv - 1];
-  const next = LEVEL_THRESHOLDS[lv];
-  return Math.floor(((stars - cur) / (next - cur)) * 100);
-}
-function starsToNext(stars) {
-  const lv = calcLevel(stars);
-  if (lv >= LEVEL_THRESHOLDS.length) return 0;
-  return LEVEL_THRESHOLDS[lv] - stars;
+function getGameLevel(data) { return data.gameLevel || 1; }
+function getLevelClears(data) {
+  if (!data.levelClears) data.levelClears = {};
+  const lv = getGameLevel(data);
+  if (!data.levelClears[lv]) data.levelClears[lv] = {};
+  return data.levelClears[lv];
 }
 
 /* ====== 회원 DB ====== */
@@ -1253,7 +1258,7 @@ function doRegister() {
   if (pw !== pw2) { errEl.textContent = '비밀번호가 일치하지 않아요.'; return; }
   const users = getUsers();
   if (users[nick]) { errEl.textContent = '이미 사용 중인 닉네임이에요.'; return; }
-  users[nick] = { nickname: nick, password: btoa(pw), stars: 0, purified: {}, history: [], createdAt: Date.now() };
+  users[nick] = { nickname: nick, password: btoa(pw), stars: 0, gameLevel: 1, levelClears: {1:{}}, history: [], createdAt: Date.now() };
   saveUsers(users);
   // 회원가입 완료 → 로그인 탭으로 이동
   document.getElementById('regNick').value = '';
@@ -1288,33 +1293,61 @@ let _currentDiff = 1;
 function updateUI() {
   const data = getUserData();
   if (!data) return;
-  const stars = data.stars;
-  const lv = calcLevel(stars);
-  const diff = getDifficulty(lv);
-  _currentDiff = diff;
+  // 마이그레이션: 구버전 유저
+  if (!data.gameLevel) { data.gameLevel = 1; data.levelClears = {1:{}}; saveUserData(data); }
+  const lv = getGameLevel(data);
+  const clears = getLevelClears(data);
+  const clearedCount = Object.keys(clears).length;
+  _currentDiff = lv;
 
-  document.getElementById('starsCount').textContent = stars;
-  document.getElementById('purifiedCount').textContent = Object.keys(data.purified).length + '/' + monsters.length;
-  document.getElementById('levelDisplay').textContent = 'Lv.' + lv;
-  document.getElementById('diffDisplay').textContent = '⚔️' + diff;
+  document.getElementById('starsCount').textContent = data.stars || 0;
+  document.getElementById('purifiedCount').textContent = clearedCount + '/' + monsters.length;
+  document.getElementById('levelDisplay').textContent = LEVEL_NAMES[lv];
+  document.getElementById('diffDisplay').textContent = DIFF_NAMES[lv];
   document.getElementById('navNick').textContent = data.nickname;
-  document.getElementById('navLevel').textContent = 'Lv.' + lv + ' ' + getLevelTitle(lv);
+  document.getElementById('navLevel').textContent = LEVEL_NAMES[lv] + ' ' + LEVEL_TITLES[lv];
+}
+
+function renderLevelHeader() {
+  const data = getUserData();
+  if (!data) return;
+  const lv = getGameLevel(data);
+  const clears = getLevelClears(data);
+  const done = Object.keys(clears).length;
+  const pct = Math.floor(done / monsters.length * 100);
+  const dots = Array.from({length: MAX_LEVEL}, (_, i) => {
+    const n = i + 1;
+    const cls = n < lv ? 'done' : n === lv ? 'current' : '';
+    return `<div class="level-dot ${cls}">${n < lv ? '✓' : n}</div>`;
+  }).join('');
+  document.getElementById('levelHeader').innerHTML = `
+    <div class="level-header">
+      <h2>🏆 ${LEVEL_NAMES[lv]} — ${LEVEL_TITLES[lv]}</h2>
+      <div class="level-dots">${dots}</div>
+      <div class="level-progress-wrap">
+        <div class="level-progress-bar" style="width:${pct}%"></div>
+      </div>
+      <div class="level-progress-text">몬스터 ${done} / ${monsters.length} 정화 완료 · 난이도: ${DIFF_NAMES[lv]}</div>
+    </div>
+  `;
 }
 
 function renderMonsters() {
   const data = getUserData();
   if (!data) return;
+  const clears = getLevelClears(data);
+  renderLevelHeader();
   const grid = document.getElementById('monstersGrid');
   grid.innerHTML = '';
   monsters.forEach(m => {
-    const isPurified = data.purified[m.id];
+    const isPurified = !!clears[m.id];
     const card = document.createElement('div');
     card.className = 'monster-card' + (isPurified ? ' purified' : '');
     card.innerHTML = `
       <div class="monster-emoji">${getMonsterArt(m.id, isPurified)}</div>
       <div class="monster-name">${m.name}</div>
       <div class="monster-desc">${m.desc}</div>
-      ${isPurified ? '<div class="monster-status">✨ 친구가 됨</div>' : '<div class="monster-status" style="color:#888;">🌀 정화 필요</div>'}
+      ${isPurified ? '<div class="monster-status">✨ 정화 완료</div>' : '<div class="monster-status" style="color:#888;">🌀 정화 필요</div>'}
     `;
     card.onclick = () => startQuest(m);
     grid.appendChild(card);
@@ -1335,76 +1368,68 @@ function goHome() {
 function showMyPage() {
   const data = getUserData();
   if (!data) return;
-  const lv = calcLevel(data.stars);
-  const diff = getDifficulty(lv);
-  const prog = levelProgress(data.stars);
-  const toNext = starsToNext(data.stars);
-  const purifiedList = data.purified;
-  const purifiedCount = Object.keys(purifiedList).length;
+  const lv = getGameLevel(data);
+  const clears = getLevelClears(data);
+  const purifiedCount = Object.keys(clears).length;
+  const pct = Math.floor(purifiedCount / monsters.length * 100);
+  const totalClears = data.history ? data.history.length : 0;
+
+  const levelRows = Array.from({length: MAX_LEVEL}, (_, i) => {
+    const n = i + 1;
+    const lc = (data.levelClears || {})[n] || {};
+    const cnt = Object.keys(lc).length;
+    const done = cnt >= monsters.length;
+    const isCur = n === lv;
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:10px;border-radius:10px;background:${done?'#e8f8e8':isCur?'#f0eeff':'#f8f8f8'}">
+      <span style="font-size:1.4em">${done?'🏆':isCur?'⚔️':'🔒'}</span>
+      <div style="flex:1">
+        <div style="font-weight:bold;color:#5a3d8a">${LEVEL_NAMES[n]} <span style="font-size:0.8em;color:#888">(${DIFF_NAMES[n]})</span></div>
+        <div style="font-size:0.82em;color:#888">${done?'완료! ✅':isCur?`진행 중 ${cnt}/${monsters.length}`:'미해금 🔒'}</div>
+      </div>
+      <span style="font-weight:bold;color:#5a3d8a">${done||isCur?`${cnt}/${monsters.length}`:''}</span>
+    </div>`;
+  }).join('');
 
   const content = document.getElementById('myPageContent');
   content.innerHTML = `
     <div class="mypage-header">
       <div class="mypage-avatar">🧙</div>
       <div class="mypage-nickname">${data.nickname}</div>
-      <div class="mypage-title">${getLevelTitle(lv)}</div>
+      <div class="mypage-title">${LEVEL_TITLES[lv]}</div>
       <div class="mypage-levelbar">
         <div class="mypage-levelbar-fill" id="lvBarFill" style="width:0%"></div>
       </div>
-      <div class="mypage-levelnext">${lv < 10 ? `다음 레벨까지 ⭐ ${toNext}개` : '최고 레벨 달성! 🏆'}</div>
+      <div class="mypage-levelnext">${lv < MAX_LEVEL ? `이번 단계 ${purifiedCount}/${monsters.length} 정화` : '최고 단계 진행 중!'}</div>
     </div>
     <div class="mypage-stats">
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">${data.stars}</span>
-        <div class="mypage-stat-label">⭐ 보유 별</div>
-      </div>
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">Lv.${lv}</span>
-        <div class="mypage-stat-label">🏆 현재 레벨</div>
-      </div>
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">${purifiedCount}</span>
-        <div class="mypage-stat-label">💖 친구된 몬스터</div>
-      </div>
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">${DIFF_NAMES[diff]}</span>
-        <div class="mypage-stat-label">⚔️ 현재 난이도</div>
-      </div>
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">${data.history ? data.history.length : 0}</span>
-        <div class="mypage-stat-label">🎮 총 클리어</div>
-      </div>
-      <div class="mypage-stat">
-        <span class="mypage-stat-value">${monsters.length - purifiedCount}</span>
-        <div class="mypage-stat-label">🌀 남은 몬스터</div>
-      </div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${data.stars||0}</span><div class="mypage-stat-label">⭐ 총 별</div></div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${LEVEL_NAMES[lv]}</span><div class="mypage-stat-label">🏆 현재 단계</div></div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${purifiedCount}/${monsters.length}</span><div class="mypage-stat-label">💖 이번 단계</div></div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${DIFF_NAMES[lv]}</span><div class="mypage-stat-label">⚔️ 난이도</div></div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${totalClears}</span><div class="mypage-stat-label">🎮 총 클리어</div></div>
+      <div class="mypage-stat"><span class="mypage-stat-value">${monsters.length - purifiedCount}</span><div class="mypage-stat-label">🌀 남은 몬스터</div></div>
     </div>
     <div class="mypage-section">
-      <h3>💖 몬스터 친구 현황</h3>
+      <h3>🗺️ 단계별 진행 현황</h3>
+      ${levelRows}
+    </div>
+    <div class="mypage-section">
+      <h3>💖 이번 단계 몬스터</h3>
       <div class="mypage-monster-grid">
         ${monsters.map(m => `
-          <div class="mypage-monster-item ${purifiedList[m.id] ? 'done' : ''}">
-            ${getMonsterArt(m.id, !!purifiedList[m.id])}
+          <div class="mypage-monster-item ${clears[m.id] ? 'done' : ''}">
+            ${getMonsterArt(m.id, !!clears[m.id])}
             <div>${m.name}</div>
-            <div style="font-size:0.8em">${purifiedList[m.id] ? '✅' : '🌀'}</div>
+            <div style="font-size:0.8em">${clears[m.id] ? '✅' : '🌀'}</div>
           </div>
         `).join('')}
       </div>
     </div>
-    <div class="mypage-section">
-      <h3>📈 난이도별 보상</h3>
-      ${[1,2,3,4,5].map(d => `
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <span class="diff-badge diff-${d}">${DIFF_NAMES[d]}</span>
-          <span style="color:#666;font-size:0.9em;">첫 정화 ⭐${DIFF_CONFIG[d].earnFirst} · 재도전 ⭐${DIFF_CONFIG[d].earnRetry}</span>
-          ${d === diff ? '<span style="color:#5a3d8a;font-weight:bold;">← 현재</span>' : ''}
-        </div>
-      `).join('')}
-    </div>
   `;
   showGameScreen('myPageScreen');
   setTimeout(() => {
-    document.getElementById('lvBarFill').style.width = prog + '%';
+    const el = document.getElementById('lvBarFill');
+    if (el) el.style.width = pct + '%';
   }, 100);
 }
 
@@ -1821,44 +1846,66 @@ function addSparkle(el) {
 }
 
 /* ====== 완료 처리 ====== */
+let _pendingLevelUp = false;
+
 function complete(monster) {
   clearInterval(_timerInterval);
   const data = getUserData();
   if (!data) return;
-  const diff = _currentDiff;
-  const cfg = DIFF_CONFIG[diff];
-  const isFirst = !data.purified[monster.id];
+  const lv = getGameLevel(data);
+  const cfg = DIFF_CONFIG[lv];
+  const clears = getLevelClears(data);
+  const isFirst = !clears[monster.id];
   const earned = isFirst ? cfg.earnFirst : cfg.earnRetry;
-  const prevLv = calcLevel(data.stars);
 
-  data.purified[monster.id] = true;
+  clears[monster.id] = true;
+  if (!data.levelClears) data.levelClears = {};
+  data.levelClears[lv] = clears;
+  if (!data.stars) data.stars = 0;
   data.stars += earned;
   if (!data.history) data.history = [];
-  data.history.push({ monsterId: monster.id, diff, earnedAt: Date.now() });
+  data.history.push({ monsterId: monster.id, level: lv, earnedAt: Date.now() });
   saveUserData(data);
-
-  const newLv = calcLevel(data.stars);
-  const leveledUp = newLv > prevLv;
   updateUI();
 
-  document.getElementById('modalEmoji').textContent = leveledUp ? '🎊' : '😊✨';
-  document.getElementById('modalTitle').textContent = monster.name + '이(가) 친구가 되었어요!';
-  document.getElementById('modalMessage').textContent =
-    monster.healMessage + `\n⭐ +${earned} 획득!` +
-    (leveledUp ? `\n\n🎊 레벨 업! Lv.${newLv} ${getLevelTitle(newLv)}` : '');
-  document.getElementById('rewardModal').classList.add('active');
+  const allCleared = Object.keys(clears).length >= monsters.length;
+  _pendingLevelUp = false;
 
-  if (Object.keys(data.purified).length === monsters.length) {
-    setTimeout(() => {
-      document.getElementById('modalEmoji').textContent = '🏆🎉';
-      document.getElementById('modalTitle').textContent = '모든 몬스터를 친구로 만들었어요!';
-      document.getElementById('modalMessage').textContent = '대단해요! 당신은 진정한 마음 마법사예요. 난이도를 올려서 다시 도전해 보세요!';
-    }, 100);
+  if (allCleared && lv >= MAX_LEVEL) {
+    // 최종 클리어
+    document.getElementById('modalEmoji').textContent = '🏆🎉';
+    document.getElementById('modalTitle').textContent = '모든 단계 완료!';
+    document.getElementById('modalMessage').textContent = '대단해요! 당신은 진정한 마음 마법사예요!\n모든 5단계를 클리어했어요! 🌟';
+    document.getElementById('modalBtn').textContent = '완료 🎊';
+  } else if (allCleared) {
+    // 단계 완료 → 다음 단계
+    _pendingLevelUp = true;
+    document.getElementById('modalEmoji').textContent = '🎊';
+    document.getElementById('modalTitle').textContent = `${LEVEL_NAMES[lv]} 완료!`;
+    document.getElementById('modalMessage').textContent =
+      `축하해요! ${LEVEL_NAMES[lv]}의 모든 몬스터를 정화했어요!\n⭐ +${earned} 획득!\n\n다음은 ${LEVEL_NAMES[lv + 1]} — ${DIFF_NAMES[lv + 1]} 난이도가 기다려요!`;
+    document.getElementById('modalBtn').textContent = `${LEVEL_NAMES[lv + 1]} 시작! 🚀`;
+  } else {
+    // 일반 완료
+    document.getElementById('modalEmoji').textContent = '😊✨';
+    document.getElementById('modalTitle').textContent = monster.name + '이(가) 정화됐어요!';
+    document.getElementById('modalMessage').textContent = monster.healMessage + `\n⭐ +${earned} 획득!`;
+    document.getElementById('modalBtn').textContent = '계속하기';
   }
+  document.getElementById('rewardModal').classList.add('active');
 }
 
 function closeModal() {
   document.getElementById('rewardModal').classList.remove('active');
+  if (_pendingLevelUp) {
+    _pendingLevelUp = false;
+    const data = getUserData();
+    const nextLv = (data.gameLevel || 1) + 1;
+    data.gameLevel = nextLv;
+    if (!data.levelClears[nextLv]) data.levelClears[nextLv] = {};
+    saveUserData(data);
+    updateUI();
+  }
   goHome();
 }
 
