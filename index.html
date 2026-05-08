@@ -701,6 +701,137 @@
     }
   }
 
+  /* ===== 네비게이션 바 ===== */
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #5a3d8a, #764ba2);
+    padding: 10px 18px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    color: white;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-user { font-weight: bold; font-size: 0.95em; }
+  .nav-level {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.88em;
+  }
+  .nav-btn {
+    background: rgba(255,255,255,0.2);
+    border: none; color: white;
+    padding: 7px 14px;
+    border-radius: 20px; cursor: pointer;
+    font-size: 0.85em; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.38); }
+
+  /* ===== 인증 화면 ===== */
+  .auth-container { max-width: 360px; margin: 0 auto; }
+  .auth-hero { text-align: center; margin-bottom: 28px; }
+  .auth-hero .hero-icon { font-size: 4em; }
+  .auth-hero h2 { color: #5a3d8a; margin-top: 8px; font-size: 1.4em; }
+  .auth-hero p { color: #999; margin-top: 5px; font-size: 0.92em; }
+  .auth-tabs {
+    display: flex; border-radius: 12px;
+    overflow: hidden; margin-bottom: 22px; background: #eee;
+  }
+  .auth-tab {
+    flex: 1; padding: 12px; text-align: center;
+    cursor: pointer; font-weight: bold; color: #888; transition: all 0.2s;
+  }
+  .auth-tab.active {
+    background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+  }
+  .auth-form { display: none; }
+  .auth-form.active { display: block; }
+  .auth-input {
+    width: 100%; padding: 13px; border: 2px solid #ddd;
+    border-radius: 12px; font-size: 1em; margin-bottom: 12px;
+    font-family: inherit; transition: border-color 0.2s;
+  }
+  .auth-input:focus { outline: none; border-color: #667eea; }
+  .auth-btn {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none; border-radius: 12px;
+    font-size: 1.05em; font-weight: bold; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+  }
+  .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(102,126,234,0.45); }
+  .auth-error { color: #e74c3c; text-align: center; font-size: 0.9em; margin-top: 10px; min-height: 18px; }
+
+  /* ===== 마이페이지 ===== */
+  .mypage-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px; padding: 25px;
+    color: white; text-align: center; margin-bottom: 18px;
+  }
+  .mypage-avatar { font-size: 3.5em; margin-bottom: 8px; }
+  .mypage-nickname { font-size: 1.5em; font-weight: bold; margin-bottom: 4px; }
+  .mypage-title { font-size: 0.95em; opacity: 0.88; margin-bottom: 14px; }
+  .mypage-levelbar {
+    background: rgba(255,255,255,0.28); border-radius: 10px;
+    height: 13px; overflow: hidden;
+  }
+  .mypage-levelbar-fill {
+    height: 100%; background: white; border-radius: 10px; transition: width 0.7s ease;
+  }
+  .mypage-levelnext { font-size: 0.78em; margin-top: 6px; opacity: 0.82; }
+  .mypage-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin-bottom: 18px;
+  }
+  .mypage-stat {
+    background: white; border: 2px solid #f0f0f0;
+    border-radius: 15px; padding: 14px; text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  }
+  .mypage-stat-value { font-size: 1.6em; font-weight: bold; color: #5a3d8a; display: block; }
+  .mypage-stat-label { font-size: 0.78em; color: #888; margin-top: 4px; }
+  .mypage-section {
+    background: white; border-radius: 15px;
+    padding: 18px; margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  }
+  .mypage-section h3 { color: #5a3d8a; margin-bottom: 14px; }
+  .mypage-monster-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .mypage-monster-item {
+    text-align: center; padding: 10px 5px;
+    border-radius: 10px; background: #f0f0f0; font-size: 0.75em;
+  }
+  .mypage-monster-item.done { background: linear-gradient(135deg, #d4fc79, #96e6a1); }
+  .mypage-monster-item svg { width: 40px; height: 40px; }
+
+  /* ===== 난이도 뱃지 & 타이머 ===== */
+  .diff-badge {
+    display: inline-block; padding: 4px 14px;
+    border-radius: 20px; font-size: 0.82em;
+    font-weight: bold; margin-bottom: 8px;
+  }
+  .diff-1 { background: #d4fc79; color: #2d7a2d; }
+  .diff-2 { background: #ffe08a; color: #7a5c00; }
+  .diff-3 { background: #fda085; color: #7a2a00; }
+  .diff-4 { background: #f093fb; color: #5a007a; }
+  .diff-5 { background: #4a00e0; color: white; }
+
+  .quest-timer {
+    font-size: 1.8em; font-weight: bold;
+    color: #e74c3c; margin: 8px 0;
+  }
+  @keyframes timerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+  .quest-timer.warning { animation: timerPulse 0.5s infinite; }
+
   /* 터치 디바이스 최적화 */
   @media (hover: none) and (pointer: coarse) {
     .btn:active {
@@ -721,34 +852,90 @@
   <h1>🌟 감정 몬스터 정화 퀘스트 🌟</h1>
   <p class="subtitle">내 마음의 몬스터를 만나고 친구로 만들어보자!</p>
 
-  <div class="stats">
-    <div class="stat-item">
-      <span class="stat-value" id="starsCount">0</span>
-      ⭐ 별
+  <!-- 인증 화면 -->
+  <div id="authScreen">
+    <div class="auth-hero">
+      <div class="hero-icon">🌟</div>
+      <h2>반가워요!</h2>
+      <p>로그인 후 나의 성장을 기록해요</p>
     </div>
-    <div class="stat-item">
-      <span class="stat-value" id="purifiedCount">0/8</span>
-      💖 친구된 몬스터
-    </div>
-    <div class="stat-item">
-      <span class="stat-value" id="levelDisplay">Lv.1</span>
-      🏆 레벨
+    <div class="auth-container">
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')">로그인</div>
+        <div class="auth-tab" id="tabRegister" onclick="switchTab('register')">회원가입</div>
+      </div>
+      <div class="auth-form active" id="loginForm">
+        <input type="text" class="auth-input" id="loginNick" placeholder="닉네임">
+        <input type="password" class="auth-input" id="loginPw" placeholder="비밀번호">
+        <button class="auth-btn" onclick="doLogin()">로그인 🚀</button>
+        <div class="auth-error" id="loginError"></div>
+      </div>
+      <div class="auth-form" id="registerForm">
+        <input type="text" class="auth-input" id="regNick" placeholder="닉네임 (2~10자)">
+        <input type="password" class="auth-input" id="regPw" placeholder="비밀번호 (4자 이상)">
+        <input type="password" class="auth-input" id="regPw2" placeholder="비밀번호 확인">
+        <button class="auth-btn" onclick="doRegister()">회원가입 ✨</button>
+        <div class="auth-error" id="registerError"></div>
+      </div>
     </div>
   </div>
 
-  <!-- 메인 화면: 몬스터 선택 -->
-  <div id="mainScreen" class="screen active">
-    <h2 style="text-align:center; color:#5a3d8a; margin-bottom:20px;">정화할 몬스터를 골라보세요!</h2>
-    <div class="monsters-grid" id="monstersGrid"></div>
-  </div>
+  <!-- 게임 영역 (로그인 후 표시) -->
+  <div id="gameArea" style="display:none">
 
-  <!-- 퀘스트 화면 -->
-  <div id="questScreen" class="screen">
-    <div class="quest-area" id="questArea"></div>
-    <div style="text-align:center; margin-top:20px;">
-      <button class="btn btn-back" onclick="goHome()">🏠 돌아가기</button>
+    <!-- 네비게이션 -->
+    <div class="nav-bar">
+      <div class="nav-user">안녕, <strong id="navNick">-</strong>! 👋</div>
+      <div class="nav-level" id="navLevel">Lv.1</div>
+      <div>
+        <button class="nav-btn" onclick="showMyPage()">👤 마이페이지</button>
+        <button class="nav-btn" style="margin-left:5px;" onclick="doLogout()">🚪 로그아웃</button>
+      </div>
     </div>
-  </div>
+
+    <!-- 스탯 바 -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-value" id="starsCount">0</span>
+        ⭐ 별
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="purifiedCount">0/8</span>
+        💖 친구된 몬스터
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="levelDisplay">Lv.1</span>
+        🏆 레벨
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="diffDisplay">⚔️1</span>
+        🎯 난이도
+      </div>
+    </div>
+
+    <!-- 메인 화면 -->
+    <div id="mainScreen" class="screen active">
+      <h2 style="text-align:center; color:#5a3d8a; margin-bottom:20px;">정화할 몬스터를 골라보세요!</h2>
+      <div class="monsters-grid" id="monstersGrid"></div>
+    </div>
+
+    <!-- 퀘스트 화면 -->
+    <div id="questScreen" class="screen">
+      <div class="quest-area" id="questArea"></div>
+      <div style="text-align:center; margin-top:20px;">
+        <button class="btn btn-back" onclick="goHome()">🏠 돌아가기</button>
+      </div>
+    </div>
+
+    <!-- 마이페이지 -->
+    <div id="myPageScreen" class="screen">
+      <div id="myPageContent"></div>
+      <div style="text-align:center; margin-top:20px;">
+        <button class="btn btn-back" onclick="goHome()">🏠 퀘스트 목록</button>
+      </div>
+    </div>
+
+  </div><!-- /gameArea -->
 </div>
 
 <!-- 보상 모달 -->
@@ -975,33 +1162,143 @@ function getMonsterArt(id, isPurified) {
   return isPurified ? monsterSVGs.purified : (monsterSVGs[id] || '');
 }
 
-let state = {
-  stars: 0,
-  level: 1,
-  purified: {}
+/* ====== 레벨·난이도 설정 ====== */
+const LEVEL_THRESHOLDS = [0, 5, 15, 30, 50, 75, 105, 140, 180, 225];
+const LEVEL_TITLES = ['마음 탐험가 🔍','정화 견습생 🌱','감정 조련사 🎯','마음 수호자 🛡️','정화 마법사 ✨','감정 마스터 👑','전설의 정화사 🌟','빛의 수호자 💫','마음의 현자 🔮','감정의 신 ⚡'];
+const DIFF_NAMES = ['','쉬움','보통','어려움','고급','전설'];
+const DIFF_CONFIG = {
+  1: { cycles:4,  groundMin:3, pauseStars:5,  interval:900, gems:6,  steps:10, revClicks:10, bubbles:8,  memPairs:['🐶','🐱','🦁','🐻'],                         timer:null, earnFirst:3,  earnRetry:1 },
+  2: { cycles:5,  groundMin:4, pauseStars:7,  interval:750, gems:8,  steps:15, revClicks:12, bubbles:10, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],               timer:null, earnFirst:5,  earnRetry:2 },
+  3: { cycles:6,  groundMin:5, pauseStars:10, interval:600, gems:10, steps:20, revClicks:15, bubbles:12, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊'],               timer:60,   earnFirst:8,  earnRetry:3 },
+  4: { cycles:7,  groundMin:5, pauseStars:12, interval:500, gems:12, steps:25, revClicks:18, bubbles:15, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'],   timer:45,   earnFirst:12, earnRetry:4 },
+  5: { cycles:8,  groundMin:5, pauseStars:15, interval:400, gems:14, steps:30, revClicks:20, bubbles:18, memPairs:['🐶','🐱','🦁','🐻','🐧','🦊','🐼','🐨'],   timer:30,   earnFirst:18, earnRetry:6 }
 };
 
-function loadState() {
-  const saved = localStorage.getItem('monsterQuestState');
-  if (saved) state = JSON.parse(saved);
+function calcLevel(stars) {
+  let lv = 1;
+  for (let i = 0; i < LEVEL_THRESHOLDS.length; i++) {
+    if (stars >= LEVEL_THRESHOLDS[i]) lv = i + 1;
+    else break;
+  }
+  return Math.min(lv, LEVEL_THRESHOLDS.length);
 }
-function saveState() {
-  localStorage.setItem('monsterQuestState', JSON.stringify(state));
+function getLevelTitle(lv) { return LEVEL_TITLES[Math.min(lv - 1, LEVEL_TITLES.length - 1)]; }
+function getDifficulty(lv) {
+  if (lv <= 2) return 1; if (lv <= 4) return 2;
+  if (lv <= 6) return 3; if (lv <= 8) return 4;
+  return 5;
+}
+function levelProgress(stars) {
+  const lv = calcLevel(stars);
+  if (lv >= LEVEL_THRESHOLDS.length) return 100;
+  const cur = LEVEL_THRESHOLDS[lv - 1];
+  const next = LEVEL_THRESHOLDS[lv];
+  return Math.floor(((stars - cur) / (next - cur)) * 100);
+}
+function starsToNext(stars) {
+  const lv = calcLevel(stars);
+  if (lv >= LEVEL_THRESHOLDS.length) return 0;
+  return LEVEL_THRESHOLDS[lv] - stars;
 }
 
-function updateStats() {
-  document.getElementById('starsCount').textContent = state.stars;
-  const purifiedNum = Object.keys(state.purified).length;
-  document.getElementById('purifiedCount').textContent = purifiedNum + '/' + monsters.length;
-  state.level = Math.floor(state.stars / 5) + 1;
-  document.getElementById('levelDisplay').textContent = 'Lv.' + state.level;
+/* ====== 회원 DB ====== */
+function getUsers() { return JSON.parse(localStorage.getItem('mqUsers') || '{}'); }
+function saveUsers(u) { localStorage.setItem('mqUsers', JSON.stringify(u)); }
+function getSession() { return localStorage.getItem('mqSession') || null; }
+function setSession(nick) { localStorage.setItem('mqSession', nick); }
+function clearSession() { localStorage.removeItem('mqSession'); }
+
+function getUserData() {
+  const nick = getSession();
+  if (!nick) return null;
+  return getUsers()[nick] || null;
+}
+function saveUserData(data) {
+  const nick = getSession();
+  if (!nick) return;
+  const users = getUsers();
+  users[nick] = data;
+  saveUsers(users);
+}
+
+/* ====== 인증 함수 ====== */
+function switchTab(tab) {
+  document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+  document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('registerError').textContent = '';
+}
+
+function doLogin() {
+  const nick = document.getElementById('loginNick').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  const users = getUsers();
+  if (!users[nick]) { document.getElementById('loginError').textContent = '닉네임을 찾을 수 없어요.'; return; }
+  if (users[nick].password !== btoa(pw)) { document.getElementById('loginError').textContent = '비밀번호가 틀렸어요.'; return; }
+  setSession(nick);
+  enterGame();
+}
+
+function doRegister() {
+  const nick = document.getElementById('regNick').value.trim();
+  const pw = document.getElementById('regPw').value;
+  const pw2 = document.getElementById('regPw2').value;
+  const errEl = document.getElementById('registerError');
+  if (nick.length < 2 || nick.length > 10) { errEl.textContent = '닉네임은 2~10자여야 해요.'; return; }
+  if (pw.length < 4) { errEl.textContent = '비밀번호는 4자 이상이어야 해요.'; return; }
+  if (pw !== pw2) { errEl.textContent = '비밀번호가 일치하지 않아요.'; return; }
+  const users = getUsers();
+  if (users[nick]) { errEl.textContent = '이미 사용 중인 닉네임이에요.'; return; }
+  users[nick] = { nickname: nick, password: btoa(pw), stars: 0, purified: {}, history: [], createdAt: Date.now() };
+  saveUsers(users);
+  setSession(nick);
+  enterGame();
+}
+
+function doLogout() {
+  clearSession();
+  document.getElementById('gameArea').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'block';
+  document.getElementById('loginNick').value = '';
+  document.getElementById('loginPw').value = '';
+}
+
+function enterGame() {
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('gameArea').style.display = 'block';
+  updateUI();
+  renderMonsters();
+  showGameScreen('mainScreen');
+}
+
+/* ====== 상태 */
+let _currentDiff = 1;
+
+function updateUI() {
+  const data = getUserData();
+  if (!data) return;
+  const stars = data.stars;
+  const lv = calcLevel(stars);
+  const diff = getDifficulty(lv);
+  _currentDiff = diff;
+
+  document.getElementById('starsCount').textContent = stars;
+  document.getElementById('purifiedCount').textContent = Object.keys(data.purified).length + '/' + monsters.length;
+  document.getElementById('levelDisplay').textContent = 'Lv.' + lv;
+  document.getElementById('diffDisplay').textContent = '⚔️' + diff;
+  document.getElementById('navNick').textContent = data.nickname;
+  document.getElementById('navLevel').textContent = 'Lv.' + lv + ' ' + getLevelTitle(lv);
 }
 
 function renderMonsters() {
+  const data = getUserData();
+  if (!data) return;
   const grid = document.getElementById('monstersGrid');
   grid.innerHTML = '';
   monsters.forEach(m => {
-    const isPurified = state.purified[m.id];
+    const isPurified = data.purified[m.id];
     const card = document.createElement('div');
     card.className = 'monster-card' + (isPurified ? ' purified' : '');
     card.innerHTML = `
@@ -1015,45 +1312,146 @@ function renderMonsters() {
   });
 }
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+function showGameScreen(id) {
+  document.querySelectorAll('#gameArea .screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
 function goHome() {
-  showScreen('mainScreen');
+  clearInterval(_timerInterval);
+  showGameScreen('mainScreen');
   renderMonsters();
 }
 
+function showMyPage() {
+  const data = getUserData();
+  if (!data) return;
+  const lv = calcLevel(data.stars);
+  const diff = getDifficulty(lv);
+  const prog = levelProgress(data.stars);
+  const toNext = starsToNext(data.stars);
+  const purifiedList = data.purified;
+  const purifiedCount = Object.keys(purifiedList).length;
+
+  const content = document.getElementById('myPageContent');
+  content.innerHTML = `
+    <div class="mypage-header">
+      <div class="mypage-avatar">🧙</div>
+      <div class="mypage-nickname">${data.nickname}</div>
+      <div class="mypage-title">${getLevelTitle(lv)}</div>
+      <div class="mypage-levelbar">
+        <div class="mypage-levelbar-fill" id="lvBarFill" style="width:0%"></div>
+      </div>
+      <div class="mypage-levelnext">${lv < 10 ? `다음 레벨까지 ⭐ ${toNext}개` : '최고 레벨 달성! 🏆'}</div>
+    </div>
+    <div class="mypage-stats">
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">${data.stars}</span>
+        <div class="mypage-stat-label">⭐ 보유 별</div>
+      </div>
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">Lv.${lv}</span>
+        <div class="mypage-stat-label">🏆 현재 레벨</div>
+      </div>
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">${purifiedCount}</span>
+        <div class="mypage-stat-label">💖 친구된 몬스터</div>
+      </div>
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">${DIFF_NAMES[diff]}</span>
+        <div class="mypage-stat-label">⚔️ 현재 난이도</div>
+      </div>
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">${data.history ? data.history.length : 0}</span>
+        <div class="mypage-stat-label">🎮 총 클리어</div>
+      </div>
+      <div class="mypage-stat">
+        <span class="mypage-stat-value">${monsters.length - purifiedCount}</span>
+        <div class="mypage-stat-label">🌀 남은 몬스터</div>
+      </div>
+    </div>
+    <div class="mypage-section">
+      <h3>💖 몬스터 친구 현황</h3>
+      <div class="mypage-monster-grid">
+        ${monsters.map(m => `
+          <div class="mypage-monster-item ${purifiedList[m.id] ? 'done' : ''}">
+            ${getMonsterArt(m.id, !!purifiedList[m.id])}
+            <div>${m.name}</div>
+            <div style="font-size:0.8em">${purifiedList[m.id] ? '✅' : '🌀'}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="mypage-section">
+      <h3>📈 난이도별 보상</h3>
+      ${[1,2,3,4,5].map(d => `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <span class="diff-badge diff-${d}">${DIFF_NAMES[d]}</span>
+          <span style="color:#666;font-size:0.9em;">첫 정화 ⭐${DIFF_CONFIG[d].earnFirst} · 재도전 ⭐${DIFF_CONFIG[d].earnRetry}</span>
+          ${d === diff ? '<span style="color:#5a3d8a;font-weight:bold;">← 현재</span>' : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+  showGameScreen('myPageScreen');
+  setTimeout(() => {
+    document.getElementById('lvBarFill').style.width = prog + '%';
+  }, 100);
+}
+
 function startQuest(monster) {
-  showScreen('questScreen');
+  const diff = _currentDiff;
+  showGameScreen('questScreen');
   const area = document.getElementById('questArea');
+  const diffName = DIFF_NAMES[diff];
+  const cfg = DIFF_CONFIG[diff];
   area.innerHTML = `
     <div class="quest-monster shaking" id="questMonster">${getMonsterArt(monster.id, false)}</div>
+    <span class="diff-badge diff-${diff}">⚔️ ${diffName}</span>
     <h2 class="quest-title">${monster.questTitle}</h2>
     <p class="quest-instruction">${monster.instruction.replace(/\n/g,'<br>')}</p>
+    ${cfg.timer ? `<div class="quest-timer" id="questTimer">⏱️ ${cfg.timer}초</div>` : ''}
     <div id="questGame"></div>
   `;
+  if (cfg.timer) startTimer(cfg.timer, monster);
   const gameDiv = document.getElementById('questGame');
-  if (monster.quest === 'breathing') initBreathing(gameDiv, monster);
-  else if (monster.quest === 'grounding') initGrounding(gameDiv, monster);
-  else if (monster.quest === 'pause') initPause(gameDiv, monster);
-  else if (monster.quest === 'positive') initPositive(gameDiv, monster);
-  else if (monster.quest === 'climb') initClimb(gameDiv, monster);
-  else if (monster.quest === 'reveal') initReveal(gameDiv, monster);
-  else if (monster.quest === 'bubbles') initBubbles(gameDiv, monster);
-  else if (monster.quest === 'memory') initMemory(gameDiv, monster);
+  if (monster.quest === 'breathing') initBreathing(gameDiv, monster, cfg);
+  else if (monster.quest === 'grounding') initGrounding(gameDiv, monster, cfg);
+  else if (monster.quest === 'pause') initPause(gameDiv, monster, cfg);
+  else if (monster.quest === 'positive') initPositive(gameDiv, monster, cfg);
+  else if (monster.quest === 'climb') initClimb(gameDiv, monster, cfg);
+  else if (monster.quest === 'reveal') initReveal(gameDiv, monster, cfg);
+  else if (monster.quest === 'bubbles') initBubbles(gameDiv, monster, cfg);
+  else if (monster.quest === 'memory') initMemory(gameDiv, monster, cfg);
+}
+
+let _timerInterval = null;
+function startTimer(seconds, monster) {
+  clearInterval(_timerInterval);
+  let remain = seconds;
+  _timerInterval = setInterval(() => {
+    remain--;
+    const el = document.getElementById('questTimer');
+    if (!el) { clearInterval(_timerInterval); return; }
+    el.textContent = `⏱️ ${remain}초`;
+    if (remain <= 10) el.classList.add('warning');
+    if (remain <= 0) {
+      clearInterval(_timerInterval);
+      alert(`⏱️ 시간 초과! 다시 도전해봐요! (${DIFF_NAMES[_currentDiff]})`);
+      goHome();
+    }
+  }, 1000);
 }
 
 /* ====== 호흡 퀘스트 ====== */
-function initBreathing(div, monster) {
+function initBreathing(div, monster, cfg) {
   div.innerHTML = `
     <div class="breath-circle" id="breathCircle">준비!</div>
     <div class="progress-bar"><div class="progress-fill" id="breathProgress"></div></div>
     <button class="btn" id="breathStartBtn">시작하기</button>
   `;
   let cycles = 0;
-  const total = 4;
+  const total = cfg.cycles;
   const circle = document.getElementById('breathCircle');
   const progress = document.getElementById('breathProgress');
 
@@ -1084,7 +1482,7 @@ function initBreathing(div, monster) {
 }
 
 /* ====== 그라운딩 퀘스트 ====== */
-function initGrounding(div, monster) {
+function initGrounding(div, monster, cfg) {
   const steps = [
     { num: 5, sense: '👀 눈으로 보이는 것', placeholder: '예: 책상, 의자, 창문...' },
     { num: 4, sense: '✋ 만질 수 있는 것', placeholder: '예: 옷, 책, 연필...' },
@@ -1104,8 +1502,8 @@ function initGrounding(div, monster) {
     for (let i = 0; i < steps.length; i++) {
       if (document.getElementById('g' + i).value.trim()) filled++;
     }
-    if (filled < 3) {
-      alert('적어도 3개 이상 적어보세요! 천천히 주변을 살펴봐요.');
+    if (filled < cfg.groundMin) {
+      alert(`적어도 ${cfg.groundMin}개 이상 적어보세요! 천천히 주변을 살펴봐요.`);
       return;
     }
     complete(monster);
@@ -1113,10 +1511,11 @@ function initGrounding(div, monster) {
 }
 
 /* ====== 멈춤 퀘스트 ====== */
-function initPause(div, monster) {
+function initPause(div, monster, cfg) {
+  const need = cfg.pauseStars;
   div.innerHTML = `
-    <div class="pause-info">⭐ 노란 별: 5개 모으기 | 💣 빨간 폭탄: 절대 누르지 않기!</div>
-    <div class="pause-info">점수: <span id="pauseScore">0</span> / 5 | 실수: <span id="pauseMiss">0</span> / 3</div>
+    <div class="pause-info">⭐ 노란 별: ${need}개 모으기 | 💣 빨간 폭탄: 절대 누르지 않기!</div>
+    <div class="pause-info">점수: <span id="pauseScore">0</span> / ${need} | 실수: <span id="pauseMiss">0</span> / 3</div>
     <div class="pause-game" id="pauseGame"></div>
   `;
   let score = 0, miss = 0, gameOver = false;
@@ -1136,7 +1535,7 @@ function initPause(div, monster) {
         score++;
         document.getElementById('pauseScore').textContent = score;
         addSparkle(t);
-        if (score >= 5) {
+        if (score >= need) {
           gameOver = true;
           setTimeout(() => complete(monster), 600);
         }
@@ -1152,24 +1551,18 @@ function initPause(div, monster) {
       t.remove();
     };
     game.appendChild(t);
-    setTimeout(() => t.remove(), 2500);
+    setTimeout(() => t.remove(), Math.max(1200, 2500 - cfg.interval));
   }
   const interval = setInterval(() => {
     if (gameOver) clearInterval(interval);
     else spawn();
-  }, 900);
+  }, cfg.interval);
 }
 
 /* ====== 긍정 보석 퀘스트 ====== */
-function initPositive(div, monster) {
-  const messages = [
-    '나는 소중해요',
-    '나는 잘 할 수 있어요',
-    '나는 친절해요',
-    '나는 똑똑해요',
-    '내일은 더 좋아질 거예요',
-    '나는 사랑받고 있어요'
-  ];
+function initPositive(div, monster, cfg) {
+  const allMessages = ['나는 소중해요','나는 잘 할 수 있어요','나는 친절해요','나는 똑똑해요','내일은 더 좋아질 거예요','나는 사랑받고 있어요','나는 용감해요','오늘도 잘했어요','나는 성장하고 있어요','실수해도 괜찮아요','나는 충분해요','나는 사랑스러워요','할 수 있어요!','나는 특별해요'];
+  const messages = allMessages.slice(0, cfg.gems);
   div.innerHTML = `
     <p style="color:#888; margin-bottom:15px;">보석을 모두 클릭해서 슬픔몬에게 선물하세요!</p>
     <div class="gem-area" id="gemArea"></div>
@@ -1194,8 +1587,8 @@ function initPositive(div, monster) {
 }
 
 /* ====== 산 오르기 퀘스트 (Climb) ====== */
-function initClimb(div, monster) {
-  const steps = 10;
+function initClimb(div, monster, cfg) {
+  const steps = cfg.steps;
   let currentStep = 0;
 
   div.innerHTML = `
@@ -1250,8 +1643,8 @@ function initClimb(div, monster) {
 }
 
 /* ====== 이미지 공개 퀘스트 (Reveal) ====== */
-function initReveal(div, monster) {
-  const totalClicks = 10;
+function initReveal(div, monster, cfg) {
+  const totalClicks = cfg.revClicks;
   let clickCount = 0;
 
   div.innerHTML = `
@@ -1288,8 +1681,8 @@ function initReveal(div, monster) {
 }
 
 /* ====== 버블 터트리기 퀘스트 (Bubbles) ====== */
-function initBubbles(div, monster) {
-  const bubbleCount = 8;
+function initBubbles(div, monster, cfg) {
+  const bubbleCount = cfg.bubbles;
   let popped = 0;
 
   div.innerHTML = `
@@ -1335,8 +1728,8 @@ function initBubbles(div, monster) {
 }
 
 /* ====== 메모리 게임 (Memory) ====== */
-function initMemory(div, monster) {
-  const pairs = ['🐶', '🐱', '🦁', '🐻'];
+function initMemory(div, monster, cfg) {
+  const pairs = cfg.memPairs;
   const cards = [...pairs, ...pairs];
 
   // 카드 섞기
@@ -1420,23 +1813,37 @@ function addSparkle(el) {
 
 /* ====== 완료 처리 ====== */
 function complete(monster) {
-  const isFirst = !state.purified[monster.id];
-  state.purified[monster.id] = true;
-  state.stars += isFirst ? 3 : 1;
-  saveState();
-  updateStats();
+  clearInterval(_timerInterval);
+  const data = getUserData();
+  if (!data) return;
+  const diff = _currentDiff;
+  const cfg = DIFF_CONFIG[diff];
+  const isFirst = !data.purified[monster.id];
+  const earned = isFirst ? cfg.earnFirst : cfg.earnRetry;
+  const prevLv = calcLevel(data.stars);
 
-  document.getElementById('modalEmoji').textContent = '😊✨';
+  data.purified[monster.id] = true;
+  data.stars += earned;
+  if (!data.history) data.history = [];
+  data.history.push({ monsterId: monster.id, diff, earnedAt: Date.now() });
+  saveUserData(data);
+
+  const newLv = calcLevel(data.stars);
+  const leveledUp = newLv > prevLv;
+  updateUI();
+
+  document.getElementById('modalEmoji').textContent = leveledUp ? '🎊' : '😊✨';
   document.getElementById('modalTitle').textContent = monster.name + '이(가) 친구가 되었어요!';
-  document.getElementById('modalMessage').textContent = monster.healMessage +
-    (isFirst ? ' (⭐ +3)' : ' (⭐ +1 - 다시 도전 보너스)');
+  document.getElementById('modalMessage').textContent =
+    monster.healMessage + `\n⭐ +${earned} 획득!` +
+    (leveledUp ? `\n\n🎊 레벨 업! Lv.${newLv} ${getLevelTitle(newLv)}` : '');
   document.getElementById('rewardModal').classList.add('active');
 
-  if (Object.keys(state.purified).length === monsters.length) {
+  if (Object.keys(data.purified).length === monsters.length) {
     setTimeout(() => {
       document.getElementById('modalEmoji').textContent = '🏆🎉';
       document.getElementById('modalTitle').textContent = '모든 몬스터를 친구로 만들었어요!';
-      document.getElementById('modalMessage').textContent = '대단해요! 당신은 진정한 마음 마법사예요. 언제든 다시 와서 연습해 보세요!';
+      document.getElementById('modalMessage').textContent = '대단해요! 당신은 진정한 마음 마법사예요. 난이도를 올려서 다시 도전해 보세요!';
     }, 100);
   }
 }
@@ -1446,9 +1853,20 @@ function closeModal() {
   goHome();
 }
 
-loadState();
-updateStats();
-renderMonsters();
+/* ====== 초기화 ====== */
+(function init() {
+  const nick = getSession();
+  if (nick && getUsers()[nick]) {
+    enterGame();
+  }
+  // 엔터 키 로그인
+  ['loginNick','loginPw'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  });
+  ['regNick','regPw','regPw2'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+  });
+})();
 </script>
 </body>
 </html>
