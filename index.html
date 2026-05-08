@@ -943,7 +943,7 @@
   /* 게임 영역 패딩 */
   #authScreen {
     padding: 24px 20px;
-    background: #0a0a2e;
+    background: #7ec8f0;
     position: relative;
     overflow: hidden;
     min-height: 100%;
@@ -954,18 +954,18 @@
   }
   #authScreen .auth-container,
   #authScreen .auth-hero { position: relative; z-index: 1; }
-  #authScreen .auth-hero h2 { color: #fff; text-shadow: 2px 2px 0 #1e6fff; }
-  #authScreen .auth-hero p  { color: #aac8ff; }
+  #authScreen .auth-hero h2 { color: #2a4a8a; text-shadow: 1px 1px 0 #fff; }
+  #authScreen .auth-hero p  { color: #3a5a7a; }
   #authScreen .auth-container {
-    background: rgba(10, 12, 40, 0.82);
-    border: 2px solid #3355cc;
+    background: rgba(255, 255, 255, 0.88);
+    border: 2px solid rgba(255,255,255,0.9);
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 0 30px rgba(30,80,255,0.3), 0 8px 32px rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 24px rgba(80,140,220,0.25), 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(6px);
   }
   #authScreen .auth-input {
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.98);
   }
   #gameArea   { padding: 16px 18px; background: var(--cream); }
 
@@ -1186,132 +1186,164 @@
 
   <!-- 인증 화면 -->
   <div id="authScreen">
-    <!-- 픽셀 아트 배경 SVG -->
+    <!-- 픽셀 아트 배경 SVG (밝은 낮 버전) -->
     <svg class="auth-pixel-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice">
-      <!-- 하늘 그라디언트 (픽셀 블록으로) -->
-      <rect width="400" height="600" fill="#0a0a2e"/>
-      <!-- 하늘 색 띠 (픽셀 느낌) -->
-      <rect y="0"   width="400" height="80"  fill="#0d0d3a"/>
-      <rect y="80"  width="400" height="60"  fill="#101050"/>
-      <rect y="140" width="400" height="60"  fill="#121566"/>
-      <rect y="200" width="400" height="50"  fill="#1a1a80"/>
-      <rect y="250" width="400" height="40"  fill="#1e2a9a"/>
-      <rect y="290" width="400" height="40"  fill="#1e3eb0"/>
-      <rect y="330" width="400" height="30"  fill="#1e52c8"/>
-      <rect y="360" width="400" height="30"  fill="#2266d8"/>
+      <!-- 하늘 (밝은 파란색 띠) -->
+      <rect width="400" height="600" fill="#7ec8f0"/>
+      <rect y="0"   width="400" height="60"  fill="#5ab4e8"/>
+      <rect y="60"  width="400" height="60"  fill="#6dc0ec"/>
+      <rect y="120" width="400" height="60"  fill="#7ec8f0"/>
+      <rect y="180" width="400" height="60"  fill="#90d0f4"/>
+      <rect y="240" width="400" height="60"  fill="#a4d8f6"/>
 
-      <!-- 별들 (픽셀 점) -->
-      <rect x="20"  y="15"  width="3" height="3" fill="#ffffff"/>
-      <rect x="55"  y="40"  width="2" height="2" fill="#aaccff"/>
-      <rect x="90"  y="10"  width="3" height="3" fill="#ffffff"/>
-      <rect x="130" y="30"  width="2" height="2" fill="#ffffff"/>
-      <rect x="160" y="8"   width="4" height="4" fill="#ffffaa"/>
-      <rect x="200" y="25"  width="2" height="2" fill="#ffffff"/>
-      <rect x="240" y="12"  width="3" height="3" fill="#aaccff"/>
-      <rect x="280" y="35"  width="2" height="2" fill="#ffffff"/>
-      <rect x="320" y="18"  width="3" height="3" fill="#ffffff"/>
-      <rect x="355" y="45"  width="2" height="2" fill="#ffffaa"/>
-      <rect x="370" y="10"  width="3" height="3" fill="#ffffff"/>
-      <rect x="45"  y="70"  width="2" height="2" fill="#aaccff"/>
-      <rect x="110" y="55"  width="2" height="2" fill="#ffffff"/>
-      <rect x="185" y="65"  width="3" height="3" fill="#ffffaa"/>
-      <rect x="260" y="50"  width="2" height="2" fill="#ffffff"/>
-      <rect x="335" y="72"  width="2" height="2" fill="#aaccff"/>
-      <!-- 반짝이는 큰 별 -->
-      <rect x="75"  y="22"  width="4" height="4" fill="#ffffff"/>
-      <rect x="73"  y="24"  width="8" height="1" fill="#ffffff" opacity="0.5"/>
-      <rect x="76"  y="21"  width="1" height="8" fill="#ffffff" opacity="0.5"/>
-      <rect x="310" y="28"  width="4" height="4" fill="#ffffcc"/>
-      <rect x="308" y="30"  width="8" height="1" fill="#ffffcc" opacity="0.5"/>
-      <rect x="311" y="27"  width="1" height="8" fill="#ffffcc" opacity="0.5"/>
+      <!-- 태양 (픽셀) -->
+      <rect x="44"  y="36"  width="40" height="40" fill="#ffe44e"/>
+      <rect x="40"  y="40"  width="48" height="32" fill="#ffe44e"/>
+      <rect x="48"  y="32"  width="32" height="48" fill="#ffe44e"/>
+      <!-- 태양 광선 -->
+      <rect x="30"  y="54"  width="12" height="4"  fill="#ffd700"/>
+      <rect x="86"  y="54"  width="12" height="4"  fill="#ffd700"/>
+      <rect x="60"  y="26"  width="4"  height="12" fill="#ffd700"/>
+      <rect x="60"  y="74"  width="4"  height="12" fill="#ffd700"/>
+      <rect x="36"  y="36"  width="8"  height="8"  fill="#ffd700"/>
+      <rect x="84"  y="36"  width="8"  height="8"  fill="#ffd700"/>
+      <rect x="36"  y="68"  width="8"  height="8"  fill="#ffd700"/>
+      <rect x="84"  y="68"  width="8"  height="8"  fill="#ffd700"/>
+      <!-- 태양 중심 밝은 부분 -->
+      <rect x="52"  y="44"  width="24" height="24" fill="#fff176"/>
 
-      <!-- 달 (픽셀) -->
-      <rect x="330" y="60"  width="32" height="32" fill="#ffffaa"/>
-      <rect x="332" y="58"  width="28" height="36" fill="#ffffaa"/>
-      <rect x="330" y="60"  width="36" height="32" fill="#ffffaa"/>
-      <!-- 달 크레이터 -->
-      <rect x="338" y="68"  width="6" height="6" fill="#dddd88"/>
-      <rect x="348" y="76"  width="4" height="4" fill="#dddd88"/>
-      <rect x="336" y="80"  width="4" height="4" fill="#dddd88"/>
+      <!-- 흰 구름 1 (크고 포실포실) -->
+      <rect x="130" y="56"  width="8"  height="8"  fill="#ffffff"/>
+      <rect x="138" y="48"  width="16" height="16" fill="#ffffff"/>
+      <rect x="154" y="44"  width="24" height="20" fill="#ffffff"/>
+      <rect x="178" y="48"  width="20" height="16" fill="#ffffff"/>
+      <rect x="198" y="52"  width="16" height="12" fill="#ffffff"/>
+      <rect x="214" y="56"  width="8"  height="8"  fill="#ffffff"/>
+      <rect x="132" y="64"  width="88" height="8"  fill="#ffffff"/>
+      <!-- 구름 아랫면 그림자 -->
+      <rect x="138" y="70"  width="76" height="4"  fill="#d0eaf8" opacity="0.6"/>
 
-      <!-- 픽셀 구름 1 -->
-      <rect x="10"  y="120" width="8"  height="8"  fill="#334488"/>
-      <rect x="18"  y="112" width="16" height="16" fill="#334488"/>
-      <rect x="34"  y="108" width="20" height="20" fill="#334488"/>
-      <rect x="54"  y="112" width="16" height="16" fill="#334488"/>
-      <rect x="70"  y="120" width="8"  height="8"  fill="#334488"/>
-      <rect x="12"  y="128" width="64" height="8"  fill="#334488"/>
+      <!-- 흰 구름 2 (작은) -->
+      <rect x="290" y="90"  width="8"  height="8"  fill="#ffffff"/>
+      <rect x="298" y="84"  width="16" height="14" fill="#ffffff"/>
+      <rect x="314" y="80"  width="20" height="18" fill="#ffffff"/>
+      <rect x="334" y="84"  width="16" height="14" fill="#ffffff"/>
+      <rect x="350" y="90"  width="8"  height="8"  fill="#ffffff"/>
+      <rect x="292" y="96"  width="64" height="6"  fill="#ffffff"/>
+      <rect x="298" y="100" width="52" height="4"  fill="#d0eaf8" opacity="0.6"/>
 
-      <!-- 픽셀 구름 2 -->
-      <rect x="260" y="100" width="8"  height="8"  fill="#2a3870"/>
-      <rect x="268" y="92"  width="16" height="16" fill="#2a3870"/>
-      <rect x="284" y="88"  width="24" height="20" fill="#2a3870"/>
-      <rect x="308" y="92"  width="16" height="16" fill="#2a3870"/>
-      <rect x="324" y="100" width="8"  height="8"  fill="#2a3870"/>
-      <rect x="262" y="108" width="68" height="8"  fill="#2a3870"/>
+      <!-- 흰 구름 3 (중간) -->
+      <rect x="10"  y="140" width="8"  height="8"  fill="#ffffff"/>
+      <rect x="18"  y="134" width="16" height="14" fill="#ffffff"/>
+      <rect x="34"  y="130" width="20" height="18" fill="#ffffff"/>
+      <rect x="54"  y="134" width="16" height="14" fill="#ffffff"/>
+      <rect x="70"  y="140" width="8"  height="8"  fill="#ffffff"/>
+      <rect x="12"  y="146" width="64" height="6"  fill="#ffffff"/>
 
-      <!-- 픽셀 구름 3 (작은) -->
-      <rect x="150" y="160" width="8"  height="8"  fill="#283060"/>
-      <rect x="158" y="156" width="12" height="12" fill="#283060"/>
-      <rect x="170" y="152" width="16" height="16" fill="#283060"/>
-      <rect x="186" y="156" width="12" height="12" fill="#283060"/>
-      <rect x="198" y="160" width="8"  height="8"  fill="#283060"/>
+      <!-- 새 (픽셀, 멀리) -->
+      <rect x="250" y="55"  width="6" height="3" fill="#3a8abf"/>
+      <rect x="258" y="53"  width="4" height="3" fill="#3a8abf"/>
+      <rect x="320" y="75"  width="5" height="3" fill="#3a8abf"/>
+      <rect x="327" y="73"  width="4" height="3" fill="#3a8abf"/>
+      <rect x="100" y="110" width="5" height="3" fill="#3a8abf"/>
+      <rect x="107" y="108" width="4" height="3" fill="#3a8abf"/>
 
-      <!-- 원거리 산 (픽셀 레이어 1 - 가장 뒤) -->
-      <polygon points="0,390 40,310 80,350 130,280 180,330 230,270 290,320 340,265 400,310 400,420 0,420" fill="#1a2868"/>
-      <!-- 원거리 산 레이어 2 -->
-      <polygon points="0,420 30,360 70,390 120,340 170,370 220,330 280,365 330,325 400,355 400,440 0,440" fill="#1e3280"/>
+      <!-- 원거리 연한 산 (하늘색 계열) -->
+      <polygon points="0,340 50,270 110,310 170,255 240,295 300,250 360,285 400,260 400,360 0,360" fill="#a8d4e8"/>
+      <polygon points="0,360 40,300 100,335 160,285 220,320 290,280 360,310 400,290 400,380 0,380" fill="#b8ddf0"/>
 
-      <!-- 중간 언덕 (픽셀 스타일) -->
-      <rect x="0"   y="430" width="400" height="170" fill="#0f5c1a"/>
+      <!-- 언덕 (밝은 초록) -->
+      <rect x="0"   y="380" width="400" height="220" fill="#5bbf4a"/>
       <!-- 언덕 픽셀 윤곽 -->
-      <rect x="0"   y="420" width="40"  height="20"  fill="#0f5c1a"/>
-      <rect x="0"   y="410" width="20"  height="10"  fill="#0f5c1a"/>
-      <rect x="40"  y="415" width="60"  height="15"  fill="#0f5c1a"/>
-      <rect x="80"  y="410" width="40"  height="20"  fill="#0f5c1a"/>
-      <rect x="100" y="400" width="60"  height="30"  fill="#0f5c1a"/>
-      <rect x="140" y="395" width="40"  height="35"  fill="#0f5c1a"/>
-      <rect x="160" y="385" width="60"  height="45"  fill="#0f5c1a"/>
-      <rect x="200" y="390" width="60"  height="40"  fill="#0f5c1a"/>
-      <rect x="240" y="400" width="60"  height="30"  fill="#0f5c1a"/>
-      <rect x="280" y="405" width="60"  height="25"  fill="#0f5c1a"/>
-      <rect x="320" y="410" width="40"  height="20"  fill="#0f5c1a"/>
-      <rect x="360" y="415" width="40"  height="15"  fill="#0f5c1a"/>
+      <rect x="0"   y="368" width="40"  height="20"  fill="#5bbf4a"/>
+      <rect x="20"  y="358" width="40"  height="20"  fill="#5bbf4a"/>
+      <rect x="50"  y="352" width="50"  height="26"  fill="#5bbf4a"/>
+      <rect x="90"  y="345" width="50"  height="33"  fill="#5bbf4a"/>
+      <rect x="130" y="338" width="60"  height="40"  fill="#5bbf4a"/>
+      <rect x="170" y="333" width="60"  height="45"  fill="#5bbf4a"/>
+      <rect x="210" y="338" width="60"  height="40"  fill="#5bbf4a"/>
+      <rect x="250" y="345" width="60"  height="33"  fill="#5bbf4a"/>
+      <rect x="300" y="352" width="50"  height="26"  fill="#5bbf4a"/>
+      <rect x="340" y="360" width="40"  height="20"  fill="#5bbf4a"/>
+      <rect x="370" y="368" width="30"  height="12"  fill="#5bbf4a"/>
 
-      <!-- 언덕 밝은 면 하이라이트 -->
-      <rect x="100" y="398" width="80"  height="4"   fill="#1a8025" opacity="0.7"/>
-      <rect x="160" y="383" width="100" height="4"   fill="#1a8025" opacity="0.7"/>
+      <!-- 언덕 하이라이트 (밝은 초록) -->
+      <rect x="90"  y="343" width="90"  height="5"   fill="#7dd96a" opacity="0.8"/>
+      <rect x="170" y="331" width="100" height="5"   fill="#7dd96a" opacity="0.8"/>
+      <rect x="50"  y="350" width="60"  height="4"   fill="#7dd96a" opacity="0.6"/>
 
-      <!-- 픽셀 나무들 -->
+      <!-- 밝은 나무들 -->
       <!-- 나무1 -->
-      <rect x="30"  y="390" width="12" height="30" fill="#3d2010"/>
-      <rect x="22"  y="362" width="28" height="30" fill="#1a6e1a"/>
-      <rect x="26"  y="350" width="20" height="16" fill="#1a6e1a"/>
-      <rect x="30"  y="342" width="12" height="12" fill="#22922a"/>
+      <rect x="28"  y="358" width="10" height="24" fill="#7a4a1a"/>
+      <rect x="18"  y="330" width="30" height="30" fill="#2ea832"/>
+      <rect x="22"  y="318" width="22" height="16" fill="#2ea832"/>
+      <rect x="26"  y="308" width="14" height="14" fill="#44cc48"/>
+      <!-- 나무 하이라이트 -->
+      <rect x="20"  y="332" width="14" height="8"  fill="#5adc5e" opacity="0.6"/>
+
       <!-- 나무2 -->
-      <rect x="340" y="400" width="12" height="20" fill="#3d2010"/>
-      <rect x="332" y="374" width="28" height="28" fill="#1a6e1a"/>
-      <rect x="336" y="362" width="20" height="16" fill="#22922a"/>
-      <rect x="340" y="354" width="12" height="12" fill="#22922a"/>
+      <rect x="344" y="365" width="10" height="20" fill="#7a4a1a"/>
+      <rect x="334" y="340" width="30" height="28" fill="#2ea832"/>
+      <rect x="338" y="328" width="22" height="16" fill="#2ea832"/>
+      <rect x="342" y="318" width="14" height="14" fill="#44cc48"/>
+      <rect x="336" y="342" width="14" height="8"  fill="#5adc5e" opacity="0.6"/>
+
       <!-- 나무3 (작은) -->
-      <rect x="300" y="408" width="8"  height="18" fill="#3d2010"/>
-      <rect x="294" y="388" width="20" height="22" fill="#1a6e1a"/>
-      <rect x="298" y="380" width="12" height="12" fill="#22922a"/>
+      <rect x="302" y="370" width="8"  height="16" fill="#7a4a1a"/>
+      <rect x="294" y="350" width="24" height="22" fill="#2ea832"/>
+      <rect x="298" y="340" width="16" height="14" fill="#44cc48"/>
 
-      <!-- 픽셀 꽃들 -->
-      <rect x="60"  y="428" width="4" height="4" fill="#ff6699"/>
-      <rect x="58"  y="426" width="8" height="4" fill="#ff6699" opacity="0.6"/>
-      <rect x="120" y="432" width="4" height="4" fill="#ffaa22"/>
-      <rect x="200" y="430" width="4" height="4" fill="#ff6699"/>
-      <rect x="255" y="428" width="4" height="4" fill="#ffaa22"/>
-      <rect x="355" y="432" width="4" height="4" fill="#ff88aa"/>
+      <!-- 나무4 (오른쪽 작은) -->
+      <rect x="72"  y="368" width="8"  height="16" fill="#7a4a1a"/>
+      <rect x="64"  y="348" width="24" height="22" fill="#2ea832"/>
+      <rect x="68"  y="338" width="16" height="14" fill="#44cc48"/>
 
-      <!-- 하단 진한 잔디 -->
-      <rect x="0"   y="460" width="400" height="140" fill="#0a4a12"/>
+      <!-- 밝은 꽃들 -->
+      <rect x="55"  y="388" width="6" height="6" fill="#ff6eb4"/>
+      <rect x="52"  y="385" width="12" height="5" fill="#ff6eb4" opacity="0.7"/>
+      <rect x="55"  y="390" width="6" height="3" fill="#ffeb3b"/>
 
-      <!-- 픽셀 격자 오버레이 (아주 미묘하게) -->
-      <rect width="400" height="600" fill="none" opacity="0.03"
-            style="background: repeating-linear-gradient(0deg,#000 0px,#000 1px,transparent 1px,transparent 8px),repeating-linear-gradient(90deg,#000 0px,#000 1px,transparent 1px,transparent 8px)"/>
+      <rect x="115" y="392" width="6" height="6" fill="#ff9800"/>
+      <rect x="112" y="389" width="12" height="5" fill="#ff9800" opacity="0.7"/>
+      <rect x="115" y="394" width="6" height="3" fill="#ffeb3b"/>
+
+      <rect x="190" y="386" width="6" height="6" fill="#e040fb"/>
+      <rect x="187" y="383" width="12" height="5" fill="#e040fb" opacity="0.7"/>
+
+      <rect x="248" y="390" width="6" height="6" fill="#ff6eb4"/>
+      <rect x="245" y="387" width="12" height="5" fill="#ff6eb4" opacity="0.7"/>
+
+      <rect x="358" y="390" width="6" height="6" fill="#ff9800"/>
+      <rect x="355" y="387" width="12" height="5" fill="#ff9800" opacity="0.7"/>
+
+      <!-- 나비 (픽셀) -->
+      <rect x="160" y="360" width="4" height="4" fill="#ff80ab"/>
+      <rect x="156" y="358" width="4" height="6" fill="#ff80ab" opacity="0.8"/>
+      <rect x="164" y="358" width="4" height="6" fill="#ff80ab" opacity="0.8"/>
+
+      <rect x="230" y="350" width="4" height="4" fill="#ffcc00"/>
+      <rect x="226" y="348" width="4" height="6" fill="#ffcc00" opacity="0.8"/>
+      <rect x="234" y="348" width="4" height="6" fill="#ffcc00" opacity="0.8"/>
+
+      <!-- 하단 잔디 (더 밝은 초록) -->
+      <rect x="0"   y="440" width="400" height="160" fill="#4caf42"/>
+      <!-- 잔디 풀잎 패턴 -->
+      <rect x="10"  y="438" width="4" height="8"  fill="#5bbf4a"/>
+      <rect x="30"  y="436" width="4" height="10" fill="#5bbf4a"/>
+      <rect x="55"  y="439" width="4" height="7"  fill="#5bbf4a"/>
+      <rect x="80"  y="437" width="4" height="9"  fill="#5bbf4a"/>
+      <rect x="105" y="438" width="4" height="8"  fill="#5bbf4a"/>
+      <rect x="130" y="436" width="4" height="10" fill="#5bbf4a"/>
+      <rect x="155" y="439" width="4" height="7"  fill="#5bbf4a"/>
+      <rect x="180" y="437" width="4" height="9"  fill="#5bbf4a"/>
+      <rect x="205" y="438" width="4" height="8"  fill="#5bbf4a"/>
+      <rect x="230" y="436" width="4" height="10" fill="#5bbf4a"/>
+      <rect x="255" y="439" width="4" height="7"  fill="#5bbf4a"/>
+      <rect x="280" y="437" width="4" height="9"  fill="#5bbf4a"/>
+      <rect x="305" y="438" width="4" height="8"  fill="#5bbf4a"/>
+      <rect x="330" y="436" width="4" height="10" fill="#5bbf4a"/>
+      <rect x="355" y="439" width="4" height="7"  fill="#5bbf4a"/>
+      <rect x="380" y="437" width="4" height="9"  fill="#5bbf4a"/>
     </svg>
     <div class="auth-hero">
       <div class="hero-icon">🌟</div>
