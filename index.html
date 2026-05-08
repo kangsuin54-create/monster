@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#667eea">
+<meta name="theme-color" content="#312e81">
 <title>감정 몬스터 정화 퀘스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -857,23 +858,458 @@
 
   /* 터치 디바이스 최적화 */
   @media (hover: none) and (pointer: coarse) {
-    .btn:active {
-      transform: scale(0.98);
-    }
-    .monster-card:active {
-      transform: scale(0.98);
-    }
-    .gem:active {
-      transform: scale(0.95) rotate(1deg);
-    }
+    .btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 #1e1b4b !important; }
+    .monster-card:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #1e1b4b !important; }
+    .gem:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 #1e1b4b !important; }
+  }
+
+  /* ══════════════════════════════════════
+     RETRO PIXEL REDESIGN
+     초등학생 친화적 픽셀 게임 테마
+  ══════════════════════════════════════ */
+  :root {
+    --dark:   #1e1b4b;
+    --purple: #6d28d9;
+    --indigo: #312e81;
+    --yellow: #fbbf24;
+    --green:  #16a34a;
+    --red:    #dc2626;
+    --blue:   #2563eb;
+    --pink:   #ec4899;
+    --bg:     #f5f3ff;
+    --white:  #ffffff;
+  }
+
+  /* 전역 폰트 */
+  * { font-family: 'Noto Sans KR', '맑은 고딕', sans-serif; }
+
+  /* ── BODY ── */
+  body {
+    background:
+      repeating-linear-gradient(0deg,   rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 28px),
+      repeating-linear-gradient(90deg,  rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 28px),
+      linear-gradient(145deg, #0f0e17 0%, #1e1b4b 50%, #312e81 100%);
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    background: var(--bg);
+    border: 4px solid var(--dark);
+    border-radius: 6px;
+    box-shadow: 7px 7px 0 var(--dark);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* ── TITLE BAR (게임 창 제목) ── */
+  h1 {
+    background: linear-gradient(90deg, var(--indigo), #4c1d95);
+    color: var(--yellow) !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 1em !important;
+    padding: 14px 16px;
+    margin: 0;
+    text-align: center;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+    letter-spacing: 0.5px;
+    border-bottom: 4px solid var(--dark);
+    line-height: 1.8;
+  }
+  .subtitle {
+    background: #ede9fe;
+    margin: 0;
+    padding: 8px 16px;
+    color: var(--purple);
+    font-weight: 700;
+    font-size: 0.9em;
+    border-bottom: 3px solid var(--dark);
+    text-align: center;
+  }
+
+  /* 게임 영역 패딩 */
+  #authScreen { padding: 24px 20px; }
+  #gameArea   { padding: 16px 18px; }
+
+  /* ── STATS HUD ── */
+  .stats {
+    background: var(--dark);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    gap: 6px;
+  }
+  .stat-item { color: rgba(255,255,255,0.75); font-size: 0.78em; }
+  .stat-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1em;
+    color: var(--yellow);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  }
+
+  /* ── NAV BAR ── */
+  .nav-bar {
+    background: linear-gradient(90deg, var(--indigo), #4c1d95);
+    border: none;
+    border-radius: 4px;
+    border-bottom: 3px solid var(--yellow);
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 3px 0 var(--dark);
+  }
+  .nav-user { color: white; font-weight: 700; }
+  .nav-level {
+    background: rgba(251,191,36,0.2);
+    border: 2px solid var(--yellow);
+    color: var(--yellow);
+    font-weight: 700;
+    font-size: 0.82em;
+  }
+  .nav-btn {
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.45);
+    color: white;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.82em;
+    transition: background 0.15s;
+  }
+  .nav-btn:hover {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--dark);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ── LEVEL HEADER ── */
+  .level-header {
+    background: linear-gradient(135deg, var(--indigo), #4c1d95);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--dark);
+  }
+  .level-header h2 { font-size: 1.1em; margin-bottom: 6px; }
+  .level-dot { border-radius: 4px; width: 30px; height: 30px; font-size: 0.7em; }
+  .level-dot.done { background: var(--yellow); border-color: #b45309; color: var(--dark); }
+  .level-dot.current {
+    background: var(--white);
+    border-color: white;
+    color: var(--dark);
+    box-shadow: 0 0 0 3px var(--yellow);
+  }
+  .level-progress-wrap {
+    background: rgba(0,0,0,0.3);
+    border-radius: 2px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .level-progress-bar {
+    background: var(--yellow);
+    border-radius: 0;
+  }
+
+  /* ── MONSTER CARDS ── */
+  .monster-card {
+    background: var(--white);
+    border: 3px solid var(--dark);
+    border-radius: 6px;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .monster-card:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 8px 8px 0 var(--dark);
+  }
+  .monster-card:active {
+    transform: translate(3px,3px);
+    box-shadow: 2px 2px 0 var(--dark);
+  }
+  .monster-card.purified {
+    background: #f0fdf4;
+    border-color: var(--green);
+    box-shadow: 5px 5px 0 #052e16;
+  }
+  .monster-name { color: var(--dark); font-weight: 900; font-size: 1.05em; }
+  .monster-desc { color: #6b7280; }
+  .monster-status { font-weight: 700; }
+  .monster-card.purified .monster-status { color: var(--green); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    background: var(--purple);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 5px 5px 0 var(--dark);
+    font-weight: 700;
+    color: white;
+    transition: transform 0.1s, box-shadow 0.1s;
+    padding: 12px 24px;
+  }
+  .btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--dark); }
+  .btn:active { transform: translate(4px,4px);  box-shadow: 1px 1px 0 var(--dark); }
+  .btn-success {
+    background: var(--green);
+    border-color: #052e16;
+    box-shadow: 5px 5px 0 #052e16;
+  }
+  .btn-success:hover  { box-shadow: 7px 7px 0 #052e16; }
+  .btn-success:active { box-shadow: 1px 1px 0 #052e16; }
+  .btn-back {
+    background: #6b7280;
+    border-color: #1f2937;
+    box-shadow: 5px 5px 0 #1f2937;
+  }
+  .btn-back:hover  { box-shadow: 7px 7px 0 #1f2937; }
+  .btn-back:active { box-shadow: 1px 1px 0 #1f2937; }
+
+  /* ── QUEST AREA ── */
+  .quest-area {
+    background: white;
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 4px #ede9fe;
+  }
+  .quest-title { color: var(--purple) !important; font-weight: 900 !important; }
+  .quest-instruction { color: #374151; }
+  .diff-badge {
+    border: 2px solid var(--dark);
+    border-radius: 3px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6em;
+    padding: 3px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    background: #e5e7eb;
+    border: 2px solid var(--dark);
+    border-radius: 3px;
+    height: 22px;
+  }
+  .progress-fill {
+    background: var(--yellow);
+    border-radius: 1px;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+  }
+
+  /* ── BREATH CIRCLE ── */
+  .breath-circle {
+    background: radial-gradient(circle, #4c1d95, var(--indigo));
+    color: var(--yellow);
+    font-weight: 900;
+    font-size: 1.2em;
+    border: 5px solid var(--yellow);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  /* ── GROUNDING ── */
+  .grounding-step {
+    border: 3px solid var(--dark);
+    border-left: 7px solid var(--purple);
+    border-radius: 4px;
+    background: white;
+    box-shadow: 3px 3px 0 #d1d5db;
+  }
+  .grounding-step h3 { color: var(--purple); }
+  .grounding-input {
+    border: 3px solid #d1d5db;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .grounding-input:focus { border-color: var(--purple); }
+
+  /* ── PAUSE GAME ── */
+  .pause-game {
+    background: linear-gradient(180deg, #dbeafe 0%, #ede9fe 100%);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+  }
+  .pause-info {
+    background: var(--dark);
+    color: var(--yellow);
+    font-weight: 700;
+    border-radius: 4px;
+  }
+  .target.good {
+    background: var(--yellow) !important;
+    border: 3px solid var(--dark);
+    box-shadow: 3px 3px 0 var(--dark);
+  }
+  .target.bad {
+    background: var(--red) !important;
+    border: 3px solid var(--dark);
+    box-shadow: 3px 3px 0 var(--dark);
+  }
+
+  /* ── GEMS ── */
+  .gem {
+    background: linear-gradient(135deg, var(--purple), var(--indigo));
+    border: 3px solid var(--dark);
+    box-shadow: 4px 4px 0 var(--dark);
+    border-radius: 4px;
+    color: white;
+    font-weight: 700;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .gem:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
+  .gem:active { transform: translate(2px,2px);  box-shadow: 2px 2px 0 var(--dark); }
+  .gem.collected {
+    background: #dcfce7;
+    border-color: var(--green);
+    box-shadow: 0 0 0 transparent;
+    color: #14532d;
+    opacity: 0.8;
+  }
+
+  /* ── MEMORY GAME ── */
+  .memory-card {
+    background: linear-gradient(135deg, var(--indigo), #4c1d95);
+    border: 3px solid var(--dark);
+    box-shadow: 4px 4px 0 var(--dark);
+    border-radius: 4px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .memory-card:hover:not(.matched) { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
+  .memory-card.flipped { background: white; border-color: var(--purple); }
+  .memory-card.matched {
+    background: #dcfce7;
+    border-color: var(--green);
+    box-shadow: 0 0 0;
+  }
+
+  /* ── BUBBLES ── */
+  .bubbles-container {
+    background: linear-gradient(180deg, #bfdbfe 0%, #ede9fe 100%);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+  }
+  .bubble {
+    border: 3px solid var(--dark);
+    box-shadow: 3px 3px 0 var(--dark);
+    background: radial-gradient(circle, #f87171, var(--red)) !important;
+    border-radius: 50%;
+  }
+  .bubble.popped {
+    background: transparent !important;
+    border-color: var(--green);
+    box-shadow: none;
+  }
+
+  /* ── MOUNTAIN CLIMB ── */
+  .mountain {
+    background: linear-gradient(180deg, #bfdbfe 0%, #dbeafe 60%, #d1fae5 100%);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+  }
+  .step {
+    border: 2px solid var(--dark);
+    border-radius: 3px;
+    font-weight: 700;
+    color: #6b7280;
+    background: white;
+  }
+  .step.passed {
+    background: var(--green);
+    border-color: #052e16;
+    color: white;
+    box-shadow: 2px 2px 0 #052e16;
+  }
+
+  /* ── REVEAL ── */
+  .reveal-image {
+    background: #ede9fe;
+    border: 4px solid var(--dark);
+    box-shadow: 5px 5px 0 var(--dark);
+    border-radius: 4px;
+  }
+  .reveal-percent { font-family: 'Press Start 2P', monospace; font-size: 0.85em; color: var(--purple); }
+
+  /* ── MODAL ── */
+  .modal-overlay.active { background: rgba(15,14,23,0.82); }
+  .modal {
+    border: 4px solid var(--dark);
+    border-radius: 6px;
+    box-shadow: 8px 8px 0 var(--dark);
+    background: white;
+  }
+  .modal h2 { color: var(--purple); font-weight: 900; }
+
+  /* ── AUTH SCREEN ── */
+  .auth-hero h2 { color: var(--purple); font-weight: 900; }
+  .auth-hero .hero-icon { display: block; font-size: 3.5em; margin-bottom: 10px; }
+  .auth-tabs {
+    background: var(--dark);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .auth-tab { color: rgba(255,255,255,0.55); }
+  .auth-tab.active { background: var(--yellow); color: var(--dark); font-weight: 900; }
+  .auth-input {
+    border: 3px solid #d1d5db;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .auth-input:focus { border-color: var(--purple); }
+  .auth-btn {
+    background: var(--purple);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: transform 0.1s, box-shadow 0.1s;
+    font-weight: 900;
+  }
+  .auth-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--dark); }
+  .auth-btn:active { transform: translate(4px,4px);  box-shadow: 1px 1px 0 var(--dark); }
+
+  /* ── MYPAGE ── */
+  .mypage-header {
+    background: linear-gradient(135deg, var(--indigo), #4c1d95);
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 5px 5px 0 var(--dark);
+  }
+  .mypage-levelbar { background: rgba(0,0,0,0.3); border-radius: 2px; }
+  .mypage-levelbar-fill { background: var(--yellow); border-radius: 2px; }
+  .mypage-stat {
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 var(--dark);
+    background: white;
+  }
+  .mypage-stat-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1em;
+    color: var(--purple);
+  }
+  .mypage-section {
+    border: 3px solid var(--dark);
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 var(--dark);
+    background: white;
+  }
+  .mypage-section h3 { color: var(--purple); font-weight: 900; }
+  .mypage-monster-item { border-radius: 4px; border: 2px solid #e5e7eb; }
+  .mypage-monster-item.done { background: #dcfce7; border-color: var(--green); }
+
+  /* ── TIMER ── */
+  .quest-timer {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.4em;
+    color: var(--red);
   }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🌟 감정 몬스터 정화 퀘스트 🌟</h1>
-  <p class="subtitle">내 마음의 몬스터를 만나고 친구로 만들어보자!</p>
+  <h1>MONSTER QUEST ★</h1>
+  <p class="subtitle">🌟 내 마음의 몬스터를 만나고 친구로 만들어보자! 🌟</p>
 
   <!-- 인증 화면 -->
   <div id="authScreen">
