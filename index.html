@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#312e81">
 <title>감정 몬스터 정화 퀘스트</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -1763,24 +1764,50 @@ function getLevelClears(data) {
   return data.levelClears[lv];
 }
 
-/* ====== 회원 DB ====== */
-function getUsers() { return JSON.parse(localStorage.getItem('mqUsers') || '{}'); }
-function saveUsers(u) { localStorage.setItem('mqUsers', JSON.stringify(u)); }
-function getSession() { return localStorage.getItem('mqSession') || null; }
-function setSession(nick) { localStorage.setItem('mqSession', nick); }
-function clearSession() { localStorage.removeItem('mqSession'); }
+/* ====== Supabase 연결 ====== */
+const SUPABASE_URL  = 'https://agkktjwpiwykyhencnkw.supabase.co';
+const SUPABASE_KEY  = 'sb_publishable_IJmNZEt3j5ZNgEOXiP_TLA_bzKycR7l';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-function getUserData() {
-  const nick = getSession();
-  if (!nick) return null;
-  return getUsers()[nick] || null;
+let _userData = null;
+
+/* 비밀번호 SHA-256 해싱 */
+async function hashPassword(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw + 'mq-salt-2026'));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
+
+/* DB 행 → 앱 내부 형식 변환 */
+function _normalize(row) {
+  return {
+    nickname:    row.nickname,
+    stars:       row.stars       || 0,
+    gameLevel:   row.game_level  || 1,
+    levelClears: row.level_clears|| {},
+    history:     row.history     || []
+  };
+}
+
+/* 세션: localStorage에 닉네임만 저장 */
+function getSession()      { return localStorage.getItem('mqSession') || null; }
+function setSession(nick)  { localStorage.setItem('mqSession', nick); }
+function clearSession()    { localStorage.removeItem('mqSession'); }
+
+/* 유저 데이터 읽기 (캐시 — 동기) */
+function getUserData() { return _userData; }
+
+/* 유저 데이터 저장 (캐시 즉시 반영 + Supabase 비동기) */
 function saveUserData(data) {
-  const nick = getSession();
-  if (!nick) return;
-  const users = getUsers();
-  users[nick] = data;
-  saveUsers(users);
+  _userData = data;
+  db.from('users').update({
+    stars:        data.stars       || 0,
+    game_level:   data.gameLevel   || 1,
+    level_clears: data.levelClears || {},
+    history:      (data.history    || []).slice(-200),
+    updated_at:   new Date().toISOString()
+  }).eq('nickname', data.nickname).then(({ error }) => {
+    if (error) console.warn('저장 오류:', error.message);
+  });
 }
 
 /* ====== 인증 함수 ====== */
@@ -1795,45 +1822,73 @@ function switchTab(tab) {
   document.getElementById('registerError').textContent = '';
 }
 
-function doLogin() {
-  const nick = document.getElementById('loginNick').value.trim();
-  const pw = document.getElementById('loginPw').value;
-  const users = getUsers();
-  if (!users[nick]) { document.getElementById('loginError').textContent = '닉네임을 찾을 수 없어요.'; return; }
-  if (users[nick].password !== btoa(pw)) { document.getElementById('loginError').textContent = '비밀번호가 틀렸어요.'; return; }
+async function doLogin() {
+  const nick  = document.getElementById('loginNick').value.trim();
+  const pw    = document.getElementById('loginPw').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.color = '#e74c3c';
+  if (!nick || !pw) { errEl.textContent = '닉네임과 비밀번호를 입력해주세요.'; return; }
+
+  errEl.textContent = '🔄 확인 중...';
+  const hash = await hashPassword(pw);
+
+  const { data, error } = await db.from('users')
+    .select('*').eq('nickname', nick).eq('password_hash', hash).maybeSingle();
+
+  if (!data || error) {
+    errEl.textContent = '닉네임 또는 비밀번호가 틀렸어요.';
+    return;
+  }
+
+  _userData = _normalize(data);
   setSession(nick);
   enterGame();
 }
 
-function doRegister() {
-  const nick = document.getElementById('regNick').value.trim();
-  const pw = document.getElementById('regPw').value;
-  const pw2 = document.getElementById('regPw2').value;
+async function doRegister() {
+  const nick  = document.getElementById('regNick').value.trim();
+  const pw    = document.getElementById('regPw').value;
+  const pw2   = document.getElementById('regPw2').value;
   const errEl = document.getElementById('registerError');
   if (nick.length < 2 || nick.length > 10) { errEl.textContent = '닉네임은 2~10자여야 해요.'; return; }
-  if (pw.length < 4) { errEl.textContent = '비밀번호는 4자 이상이어야 해요.'; return; }
-  if (pw !== pw2) { errEl.textContent = '비밀번호가 일치하지 않아요.'; return; }
-  const users = getUsers();
-  if (users[nick]) { errEl.textContent = '이미 사용 중인 닉네임이에요.'; return; }
-  users[nick] = { nickname: nick, password: btoa(pw), stars: 0, gameLevel: 1, levelClears: {1:{}}, history: [], createdAt: Date.now() };
-  saveUsers(users);
-  // 회원가입 완료 → 로그인 탭으로 이동
+  if (pw.length < 4)  { errEl.textContent = '비밀번호는 4자 이상이어야 해요.'; return; }
+  if (pw !== pw2)     { errEl.textContent = '비밀번호가 일치하지 않아요.'; return; }
+
+  errEl.textContent = '🔄 가입 중...';
+  const hash = await hashPassword(pw);
+
+  const { error } = await db.from('users').insert({
+    nickname:     nick,
+    password_hash: hash,
+    stars:        0,
+    game_level:   1,
+    level_clears: { 1: {} },
+    history:      []
+  });
+
+  if (error) {
+    errEl.textContent = error.code === '23505'
+      ? '이미 사용 중인 닉네임이에요.'
+      : '오류가 발생했어요. 다시 시도해주세요.';
+    return;
+  }
+
   document.getElementById('regNick').value = '';
-  document.getElementById('regPw').value = '';
-  document.getElementById('regPw2').value = '';
+  document.getElementById('regPw').value   = '';
+  document.getElementById('regPw2').value  = '';
   switchTab('login');
-  document.getElementById('loginNick').value = nick;
-  document.getElementById('loginError').textContent = '';
+  document.getElementById('loginNick').value  = nick;
   document.getElementById('loginError').style.color = '#27ae60';
   document.getElementById('loginError').textContent = `✅ 회원가입 완료! ${nick}님, 이제 로그인해주세요.`;
 }
 
 function doLogout() {
+  _userData = null;
   clearSession();
-  document.getElementById('gameArea').style.display = 'none';
+  document.getElementById('gameArea').style.display  = 'none';
   document.getElementById('authScreen').style.display = 'block';
   document.getElementById('loginNick').value = '';
-  document.getElementById('loginPw').value = '';
+  document.getElementById('loginPw').value   = '';
 }
 
 function showLoading(ms, callback) {
@@ -2495,26 +2550,33 @@ function closeModal() {
 }
 
 /* ====== 초기화 ====== */
-(function init() {
-  const nick = getSession();
-  if (nick && getUsers()[nick]) {
-    showLoading(2200, () => {
-      document.getElementById('gameArea').style.display = 'block';
-      updateUI();
-      renderMonsters();
-      showGameScreen('mainScreen');
-    });
-  } else {
-    showLoading(1800, () => {
-      document.getElementById('authScreen').style.display = 'block';
-    });
-  }
-  // 엔터 키 로그인
+(async function init() {
+  // 엔터 키
   ['loginNick','loginPw'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   });
   ['regNick','regPw','regPw2'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+  });
+
+  const nick = getSession();
+  if (nick) {
+    const { data } = await db.from('users').select('*').eq('nickname', nick).maybeSingle();
+    if (data) {
+      _userData = _normalize(data);
+      showLoading(2200, () => {
+        document.getElementById('authScreen').style.display = 'none';
+        document.getElementById('gameArea').style.display  = 'block';
+        updateUI();
+        renderMonsters();
+        showGameScreen('mainScreen');
+      });
+      return;
+    }
+    clearSession();
+  }
+  showLoading(1800, () => {
+    document.getElementById('authScreen').style.display = 'block';
   });
 })();
 </script>

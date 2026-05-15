@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포근한 감정 몬스터 껴안기</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(160deg, #ffe8f5 0%, #ffd6ec 40%, #e8d5f5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .scene {
+      position: relative;
+      width: 480px;
+      height: 520px;
+    }
+
+    /* 배경 별/하트 파티클 */
+    .sparkle {
+      position: absolute;
+      font-size: 20px;
+      animation: floatSparkle 3s ease-in-out infinite;
+      opacity: 0.7;
+    }
+    .sparkle:nth-child(1)  { top: 5%;  left: 8%;  animation-delay: 0s;    font-size: 18px; }
+    .sparkle:nth-child(2)  { top: 10%; left: 75%; animation-delay: 0.5s;  font-size: 24px; }
+    .sparkle:nth-child(3)  { top: 18%; left: 88%; animation-delay: 1s;    font-size: 16px; }
+    .sparkle:nth-child(4)  { top: 3%;  left: 50%; animation-delay: 1.5s;  font-size: 20px; }
+    .sparkle:nth-child(5)  { top: 60%; left: 5%;  animation-delay: 0.8s;  font-size: 18px; }
+    .sparkle:nth-child(6)  { top: 70%; left: 90%; animation-delay: 1.3s;  font-size: 22px; }
+    .sparkle:nth-child(7)  { top: 85%; left: 20%; animation-delay: 0.3s;  font-size: 16px; }
+    .sparkle:nth-child(8)  { top: 80%; left: 60%; animation-delay: 1.8s;  font-size: 20px; }
+
+    @keyframes floatSparkle {
+      0%,100% { transform: translateY(0) scale(1);   opacity: 0.6; }
+      50%      { transform: translateY(-12px) scale(1.2); opacity: 1; }
+    }
+
+    /* SVG 캐릭터 전체 */
+    .character-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: gentleBounce 2.5s ease-in-out infinite;
+    }
+
+    @keyframes gentleBounce {
+      0%,100% { transform: translate(-50%, -50%) scale(1) rotate(-1deg); }
+      50%      { transform: translate(-50%, -52%) scale(1.03) rotate(1deg); }
+    }
+
+    /* 하트 떠오르기 */
+    .heart-float {
+      position: absolute;
+      font-size: 26px;
+      animation: riseHeart 2.8s ease-in-out infinite;
+      opacity: 0;
+    }
+    .heart-float:nth-child(9)  { top: 20%; left: 42%; animation-delay: 0s; }
+    .heart-float:nth-child(10) { top: 15%; left: 55%; animation-delay: 0.9s; font-size: 18px; }
+    .heart-float:nth-child(11) { top: 12%; left: 35%; animation-delay: 1.8s; font-size: 22px; }
+
+    @keyframes riseHeart {
+      0%   { transform: translateY(0)   scale(0.5); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: translateY(-90px) scale(1.1); opacity: 0; }
+    }
+
+    /* 텍스트 */
+    .caption {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #c2607e;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px rgba(255,150,180,0.4);
+      animation: pulseTxt 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseTxt {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.05); }
+    }
+
+    .sub-caption {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #e896b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scene">
+    <!-- 파티클 -->
+    <div class="sparkle">✨</div>
+    <div class="sparkle">💖</div>
+    <div class="sparkle">⭐</div>
+    <div class="sparkle">🌸</div>
+    <div class="sparkle">✨</div>
+    <div class="sparkle">💫</div>
+    <div class="sparkle">🌟</div>
+    <div class="sparkle">💕</div>
+
+    <!-- 떠오르는 하트 -->
+    <div class="heart-float">💗</div>
+    <div class="heart-float">💓</div>
+    <div class="heart-float">💛</div>
+
+    <!-- SVG 캐릭터: 사람이 몬스터를 껴안는 장면 -->
+    <svg class="character-svg" width="380" height="400" viewBox="0 0 380 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- 포근한 후광(aura) -->
+      <ellipse cx="190" cy="260" rx="155" ry="100" fill="url(#auraGrad)" opacity="0.4"/>
+      <defs>
+        <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#ffb3d9" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#ffb3d9" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ───────── 몬스터 (가운데 아래) ───────── -->
+      <!-- 몬스터 몸통 - 동그랗고 보들보들 -->
+      <ellipse cx="190" cy="265" rx="75" ry="80" fill="#a8e6cf"/>
+      <!-- 몬스터 배 -->
+      <ellipse cx="190" cy="275" rx="48" ry="52" fill="#c8f5e0" opacity="0.7"/>
+
+      <!-- 몬스터 귀(뿔) -->
+      <ellipse cx="148" cy="195" rx="14" ry="22" fill="#88d8b0" transform="rotate(-15 148 195)"/>
+      <ellipse cx="232" cy="195" rx="14" ry="22" fill="#88d8b0" transform="rotate(15 232 195)"/>
+      <!-- 뿔 안쪽 -->
+      <ellipse cx="148" cy="197" rx="8" ry="14" fill="#ffcce6" transform="rotate(-15 148 197)"/>
+      <ellipse cx="232" cy="197" rx="8" ry="14" fill="#ffcce6" transform="rotate(15 232 197)"/>
+
+      <!-- 몬스터 얼굴 -->
+      <circle cx="190" cy="240" r="60" fill="#a8e6cf"/>
+      <!-- 볼 홍조 -->
+      <ellipse cx="160" cy="255" rx="14" ry="9" fill="#ffb3c6" opacity="0.6"/>
+      <ellipse cx="220" cy="255" rx="14" ry="9" fill="#ffb3c6" opacity="0.6"/>
+
+      <!-- 눈 (행복하게 감긴) -->
+      <path d="M 168 238 Q 175 230 182 238" stroke="#4a7c6b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M 198 238 Q 205 230 212 238" stroke="#4a7c6b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+      <!-- 입 (웃는) -->
+      <path d="M 175 258 Q 190 272 205 258" stroke="#4a7c6b" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+      <!-- 몬스터 팔 (살짝 들어올림) -->
+      <ellipse cx="122" cy="300" rx="18" ry="12" fill="#88d8b0" transform="rotate(30 122 300)"/>
+      <ellipse cx="258" cy="300" rx="18" ry="12" fill="#88d8b0" transform="rotate(-30 258 300)"/>
+
+      <!-- 몬스터 다리 -->
+      <ellipse cx="165" cy="338" rx="22" ry="14" fill="#88d8b0"/>
+      <ellipse cx="215" cy="338" rx="22" ry="14" fill="#88d8b0"/>
+
+      <!-- 몬스터 발 -->
+      <ellipse cx="162" cy="348" rx="26" ry="12" fill="#6fcfaf"/>
+      <ellipse cx="218" cy="348" rx="26" ry="12" fill="#6fcfaf"/>
+
+      <!-- 몬스터 배 무늬 (귀여운 점) -->
+      <circle cx="183" cy="275" r="5" fill="#88d8b0" opacity="0.5"/>
+      <circle cx="196" cy="285" r="4" fill="#88d8b0" opacity="0.5"/>
+      <circle cx="197" cy="268" r="3.5" fill="#88d8b0" opacity="0.5"/>
+
+      <!-- ───────── 사람 (몬스터를 뒤에서 껴안는) ───────── -->
+      <!-- 사람 몸통 -->
+      <rect x="148" y="160" width="84" height="100" rx="42" fill="#ffd6a5"/>
+
+      <!-- 옷 (파스텔 핑크 후드티) -->
+      <rect x="145" y="190" width="90" height="80" rx="20" fill="#ffb3d9"/>
+      <!-- 후드티 포켓 -->
+      <rect x="172" y="240" width="36" height="22" rx="8" fill="#ff8fbf" opacity="0.6"/>
+
+      <!-- 사람 팔 — 몬스터를 감싸안기 -->
+      <!-- 왼쪽 팔 -->
+      <path d="M 148 220 Q 100 265 118 310 Q 130 330 152 325" stroke="#ffd6a5" stroke-width="28" stroke-linecap="round" fill="none"/>
+      <path d="M 148 220 Q 100 265 118 310 Q 130 330 152 325" stroke="#ffb3d9" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <!-- 오른쪽 팔 -->
+      <path d="M 232 220 Q 280 265 262 310 Q 250 330 228 325" stroke="#ffd6a5" stroke-width="28" stroke-linecap="round" fill="none"/>
+      <path d="M 232 220 Q 280 265 262 310 Q 250 330 228 325" stroke="#ffb3d9" stroke-width="22" stroke-linecap="round" fill="none"/>
+
+      <!-- 사람 손 -->
+      <circle cx="152" cy="325" r="15" fill="#ffd6a5"/>
+      <circle cx="228" cy="325" r="15" fill="#ffd6a5"/>
+      <!-- 손가락 -->
+      <circle cx="140" cy="317" r="8" fill="#ffd6a5"/>
+      <circle cx="137" cy="330" r="8" fill="#ffd6a5"/>
+      <circle cx="165" cy="335" r="8" fill="#ffd6a5"/>
+
+      <circle cx="240" cy="317" r="8" fill="#ffd6a5"/>
+      <circle cx="243" cy="330" r="8" fill="#ffd6a5"/>
+      <circle cx="215" cy="335" r="8" fill="#ffd6a5"/>
+
+      <!-- 사람 머리 -->
+      <circle cx="190" cy="145" r="50" fill="#ffd6a5"/>
+      <!-- 머리카락 -->
+      <ellipse cx="190" cy="103" rx="50" ry="24" fill="#8b5cf6"/>
+      <ellipse cx="148" cy="118" rx="18" ry="28" fill="#8b5cf6"/>
+      <ellipse cx="232" cy="118" rx="18" ry="28" fill="#8b5cf6"/>
+      <rect x="140" y="97" width="100" height="20" rx="10" fill="#8b5cf6"/>
+
+      <!-- 사람 얼굴 -->
+      <!-- 볼 홍조 -->
+      <ellipse cx="162" cy="153" rx="13" ry="9" fill="#ffb3c6" opacity="0.65"/>
+      <ellipse cx="218" cy="153" rx="13" ry="9" fill="#ffb3c6" opacity="0.65"/>
+
+      <!-- 눈 (행복하게 감긴) -->
+      <path d="M 172 140 Q 180 132 188 140" stroke="#6b4c3b" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M 192 140 Q 200 132 208 140" stroke="#6b4c3b" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+      <!-- 입 (활짝 웃음) -->
+      <path d="M 176 158 Q 190 172 204 158" stroke="#c0766d" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+      <!-- 작은 장식 하트 -->
+      <text x="170" y="100" font-size="14" text-anchor="middle" opacity="0.8">💜</text>
+      <text x="205" y="96" font-size="11" text-anchor="middle" opacity="0.7">💚</text>
+
+    </svg>
+  </div>
+
+  <div class="caption">포근하게 꼭 껴안아 줄게 🤗</div>
+  <div class="sub-caption">감정 몬스터도 사랑받으면 기뻐해요 💚</div>
+
+</body>
+</html>
